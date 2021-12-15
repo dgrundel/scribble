@@ -1,4 +1,7 @@
 <div class="toolbar">
+    <button class="tool" style="background-color: transparent">&bull;&bull;&bull;</button>
+    <span class="divider"></span>
+
     <button class="tool">B</button>
     <button class="tool">I</button>
     <button class="tool">U</button>
@@ -12,6 +15,12 @@
         height: 2em;
         line-height: 2em;
         padding: .3em;
+    }
+
+    .divider {
+        margin: 0 .5em;
+        border-left: 1px solid;
+        opacity: 0.2;
     }
 
     .tool {
