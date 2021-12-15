@@ -1,4 +1,6 @@
 @import url('fonts.css');
+@import url('quill.base.css');
+@import url('quill.custom.css');
 
 html, body {
 	position: relative;
@@ -10,6 +12,15 @@ html, body {
 	color: #fff;
 	font-family: 'VenrynSansMedium', serif;
 	font-size: 16px;
+}
+
+strong {
+	font-family: 'VenrynSansBlack', serif;
+}
+
+blockquote {
+	border-left: .3rem solid;
+	padding-left: .5rem !important;
 }
 
 a {
@@ -66,11 +77,12 @@ pre, code {
 	font-family: 'InconsolataLGCMarkupRegular', monospace;
 }
 
-pre {
-    padding: 1em;
+pre, pre.ql-syntax {
+    padding: .5em;
     background-color: rgba(255,255,255,0.1);
-    margin: 0.5em;
+    margin: 0.5em 0;
 	white-space: pre-wrap;
 	word-break: break-all;
 	overflow: auto;
+	border-radius: .3rem;
 }

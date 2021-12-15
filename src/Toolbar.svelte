@@ -8,22 +8,22 @@ export let openMenu: () => void;
     
     <span class="divider"></span>
 
-    <button class="tool">B</button>
-    <button class="tool">I</button>
-    <button class="tool">U</button>
+    <button class="tool ql-bold"></button>
+    <button class="tool ql-italic"></button>
+    <button class="tool ql-underline"></button>
 
     <span class="divider"></span>
     
-    <button class="tool">&lcub; &rcub;</button>
-    <button class="tool">&gt;</button>
+    <button class="tool ql-code-block"></button>
+    <button class="tool ql-blockquote"></button>
     
     <span class="divider"></span>
 
-    <button class="tool">H1</button>
-    <button class="tool">H2</button>
-    <button class="tool">H3</button>
-    <button class="tool">H4</button>
-    <button class="tool">H5</button>
+    <button class="tool ql-header" value="1"></button>
+    <button class="tool ql-header" value="2"></button>
+    <button class="tool ql-header" value="3"></button>
+    <button class="tool ql-header" value="4"></button>
+    <button class="tool ql-header" value="5"></button>
 </div>
 
 <style>
