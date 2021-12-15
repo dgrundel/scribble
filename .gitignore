@@ -1,0 +1,11 @@
+.DS_Store
+
+# npm
+/node_modules/
+
+# cordova
+/plugins/
+/platforms/
+
+# svelte
+/www/build/
