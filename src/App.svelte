@@ -1,10 +1,15 @@
 <script lang="ts">
+    import Drawer from "./Drawer.svelte";
     import Editor from "./Editor.svelte";
-import Toolbar from "./Toolbar.svelte";
+    import Toolbar from "./Toolbar.svelte";
+
+    let showMenu = false;
+
 </script>
 
 <main>
-    <Toolbar/>
+    <Drawer open={showMenu} close={() => showMenu = false}/>
+    <Toolbar openMenu={() => showMenu = true}/>
     <Editor/>
 </main>
 

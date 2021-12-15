@@ -1,5 +1,10 @@
+<script lang="ts">
+export let openMenu: () => void;
+</script>
+
 <div class="toolbar">
-    <button class="tool" style="background-color: transparent">&bull;&bull;&bull;</button>
+
+    <button class="tool" style="background-color: transparent" on:click={openMenu}>&bull;&bull;&bull;</button>
     <span class="divider"></span>
 
     <button class="tool">B</button>
