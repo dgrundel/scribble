@@ -1,0 +1,160 @@
+@font-face {
+    font-family: 'InconsolataLGCMarkupBold';
+    src: url('fonts/InconsolataLGCMarkupBold.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'InconsolataLGCMarkupBoldItalic';
+    src: url('fonts/InconsolataLGCMarkupBoldItalic.otf') format('opentype');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'InconsolataLGCMarkupItalic';
+    src: url('fonts/InconsolataLGCMarkupItalic.otf') format('opentype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'InconsolataLGCMarkupRegular';
+    src: url('fonts/InconsolataLGCMarkupRegular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'VenrynSansBlack';
+    src: url('fonts/VenrynSansBlack.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'VenrynSansBlackItalic';
+    src: url('fonts/VenrynSansBlackItalic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'VenrynSansBold';
+    src: url('fonts/VenrynSansBold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'VenrynSansBoldItalic';
+    src: url('fonts/VenrynSansBoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'VenrynSansExtraBold';
+    src: url('fonts/VenrynSansExtraBold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'VenrynSansExtraBoldItalic';
+    src: url('fonts/VenrynSansExtraBoldItalic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'VenrynSansExtraLight';
+    src: url('fonts/VenrynSansExtraLight.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'VenrynSansExtraLightItalic';
+    src: url('fonts/VenrynSansExtraLightItalic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'VenrynSansItalic';
+    src: url('fonts/VenrynSansItalic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'VenrynSansItalicItalic';
+    src: url('fonts/VenrynSansItalicItalic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'VenrynSansLight';
+    src: url('fonts/VenrynSansLight.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'VenrynSansLightItalic';
+    src: url('fonts/VenrynSansLightItalic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'VenrynSansMedium';
+    src: url('fonts/VenrynSansMedium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'VenrynSansMediumItalic';
+    src: url('fonts/VenrynSansMediumItalic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'VenrynSansRegular';
+    src: url('fonts/VenrynSansRegular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'VenrynSansSemiBold';
+    src: url('fonts/VenrynSansSemiBold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'VenrynSansSemiBoldItalic';
+    src: url('fonts/VenrynSansSemiBoldItalic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'VenrynSansThin';
+    src: url('fonts/VenrynSansThin.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'VenrynSansThinItalic';
+    src: url('fonts/VenrynSansThinItalic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
