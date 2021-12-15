@@ -7,7 +7,8 @@
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "start": "sirv www --no-clear",
-    "check": "svelte-check --tsconfig ./tsconfig.json"
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "adb-install": "adb install ./platforms/android/app/build/outputs/apk/debug/app-debug.apk"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
