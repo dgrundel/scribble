@@ -24,4 +24,8 @@
         padding: .75em;
         overflow: auto;
     }
+
+    pre {
+        border-radius: .3em;
+    }
 </style>

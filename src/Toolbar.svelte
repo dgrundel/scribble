@@ -32,12 +32,15 @@ export let openMenu: () => void;
         height: 2em;
         line-height: 2em;
         padding: .3em;
+        display: flex;
+        gap: 0.25em;
+        overflow-x: auto;
     }
 
     .divider {
-        margin: 0 .5em;
+        margin: .2em;
         border-left: 1px solid;
-        opacity: 0.2;
+        opacity: 0.15;
     }
 
     .tool {
