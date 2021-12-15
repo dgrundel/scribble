@@ -37,7 +37,7 @@
         top: 0;
         bottom: 0;
         left: 0;
-        width: 80vw;
+        width: 85vw;
         background-color: #282828;
         box-shadow: 0 0 2rem rgba(0,0,0,0.4);
     }

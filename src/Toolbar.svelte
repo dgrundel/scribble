@@ -5,13 +5,25 @@ export let openMenu: () => void;
 <div class="toolbar">
 
     <button class="tool" style="background-color: transparent" on:click={openMenu}>&bull;&bull;&bull;</button>
+    
     <span class="divider"></span>
 
     <button class="tool">B</button>
     <button class="tool">I</button>
     <button class="tool">U</button>
+
+    <span class="divider"></span>
     
-    <button class="tool">Blah</button>
+    <button class="tool">&lcub; &rcub;</button>
+    <button class="tool">&gt;</button>
+    
+    <span class="divider"></span>
+
+    <button class="tool">H1</button>
+    <button class="tool">H2</button>
+    <button class="tool">H3</button>
+    <button class="tool">H4</button>
+    <button class="tool">H5</button>
 </div>
 
 <style>
