@@ -1,4 +1,6 @@
 <script lang="ts">
+import Flyout from "./Flyout.svelte";
+
 export let openMenu: () => void;
 </script>
 
@@ -12,12 +14,29 @@ export let openMenu: () => void;
     <button class="tool ql-italic"></button>
     <button class="tool ql-underline"></button>
     <button class="tool ql-strike"></button>
-    <button class="tool">test button</button>
+    
+    <Flyout>
+        <button slot="target" class="tool">test button</button>
+        <span slot="content">
+            Flying out!
+
+            <button class="tool ql-header" value="1"></button>
+            <button class="tool ql-header" value="2"></button>
+            <button class="tool ql-header" value="3"></button>
+            <button class="tool ql-header" value="4"></button>
+            <button class="tool ql-header" value="5"></button>
+        </span>
+    </Flyout>
 
     <span class="divider"></span>
     
     <button class="tool ql-code-block"></button>
     <button class="tool ql-blockquote"></button>
+    
+    <span class="divider"></span>
+    
+    <button class="tool ql-indent" value="+1"></button>
+    <button class="tool ql-indent" value="-1"></button>
     
     <span class="divider"></span>
 
@@ -47,7 +66,7 @@ export let openMenu: () => void;
     }
 
     .toolbar:hover {
-        scrollbar-width: auto;
+        scrollbar-width: thin;
     }
 
     .divider {
@@ -65,12 +84,13 @@ export let openMenu: () => void;
         line-height: 2em;
         height: 2em;
         min-width: 2em;
-
-        overflow: hidden;
+        flex-shrink: 0;
+        inline-size: max-content;
         text-align: center;
 
         background-color: #444444;
         color: rgb(211, 211, 211);
         cursor: pointer;
+        
     }
 </style>
