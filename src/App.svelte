@@ -3,14 +3,18 @@
     import Editor from "./Editor.svelte";
     import Toolbar from "./Toolbar.svelte";
 
-    let showMenu = false;
-
+    let drawerOpen = false;
+    let content: string = 'hello!';
 </script>
 
 <main>
-    <Drawer open={showMenu} close={() => showMenu = false}/>
-    <Toolbar openMenu={() => showMenu = true}/>
-    <Editor/>
+    <Drawer 
+        isOpen={drawerOpen}
+        close={() => drawerOpen = false}
+        setContent={c => content = c}
+    />
+    <Toolbar openMenu={() => drawerOpen = true}/>
+    <Editor content={content}/>
 </main>
 
 <style>
