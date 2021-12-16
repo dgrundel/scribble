@@ -14,19 +14,6 @@ export let openMenu: () => void;
     <button class="tool ql-italic"></button>
     <button class="tool ql-underline"></button>
     <button class="tool ql-strike"></button>
-    
-    <Flyout>
-        <button slot="target" class="tool">test button</button>
-        <span slot="content">
-            Flying out!
-
-            <button class="tool ql-header" value="1"></button>
-            <button class="tool ql-header" value="2"></button>
-            <button class="tool ql-header" value="3"></button>
-            <button class="tool ql-header" value="4"></button>
-            <button class="tool ql-header" value="5"></button>
-        </span>
-    </Flyout>
 
     <span class="divider"></span>
     

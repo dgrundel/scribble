@@ -46,14 +46,4 @@
     }
 </script>
 
-<div class="frame">
-    <div id="quill"></div>
-</div>
-
-<style>
-    .frame {
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: 1fr;
-    }
-</style>
+<div id="quill"></div>

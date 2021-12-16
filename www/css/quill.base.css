@@ -6,11 +6,9 @@
  */
 .ql-container {
     box-sizing: border-box;
-    /* font-family: Helvetica, Arial, sans-serif; */
-    /* font-size: 13px; */
-    height: 100%;
-    margin: 0px;
     position: relative;
+    overflow-y: auto;
+    scrollbar-width: thin;
 }
 
 .ql-container.ql-disabled .ql-tooltip {
@@ -37,10 +35,8 @@
 .ql-editor {
     box-sizing: border-box;
     line-height: 1.42;
-    height: 100%;
     outline: none;
-    overflow-y: auto;
-    padding: 12px 15px;
+    padding: 1rem;
     tab-size: 4;
     -moz-tab-size: 4;
     text-align: left;
@@ -512,4 +508,38 @@
     right: 15px;
     /* font-style: italic; */
     opacity: 0.3;
+}
+
+.ql-hidden {
+    display: none;
+}
+
+.ql-out-bottom,
+.ql-out-top {
+    visibility: hidden;
+}
+
+.ql-tooltip {
+    position: absolute;
+    transform: translateY(10px);
+}
+
+.ql-tooltip a {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.ql-tooltip.ql-flip {
+    transform: translateY(-10px);
+}
+
+.ql-formats {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.ql-formats:after {
+    clear: both;
+    content: '';
+    display: table;
 }
