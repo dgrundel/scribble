@@ -15,7 +15,7 @@
     <div class="drawer">
         <div class="close-button" on:click={close}>&times;</div>
         
-        <div on:click={() => {
+        <div class="drawer-link" on:click={() => {
             setContent(`All children, except one, grow up. They soon know that they will grow up, and the way Wendy knew was this. One day when she was two years old she was playing in a garden, and she plucked another flower and ran with it to her mother. I suppose she must have looked rather delightful, for Mrs. Darling put her hand to her heart and cried, 'Oh, why can't you remain like this for ever!' This was all that passed between them on the subject, but henceforth Wendy knew that she must grow up. You always know after you are two. Two is the beginning of the end.
 
 Of course they lived at 14, and until Wendy came her mother was the chief one. She was a lovely lady, with a romantic mind and such a sweet mocking mouth. Her romantic mind was like the tiny boxes, one within the other, that come from the puzzling East, however many you discover there is always one more; and her sweet mocking mouth had one kiss on it that Wendy could never get, though there it was, perfectly conspicuous in the right-hand corner.
@@ -89,14 +89,23 @@ Mrs. Darling was married in white, and at first she kept the books perfectly, al
     }
 
     .close-button {
+        --size: 2rem;
+        --gap: .3rem;
+
         cursor: pointer;
         position: absolute;
-        top: .3rem;
-        right: .3rem;
-        width: 2rem;
-        height: 2rem;
-        line-height: 2rem;
+        top: var(--gap);
+        right: calc(-1 * (var(--size) + var(--gap)));
+        width: var(--size);
+        height: var(--size);
+        line-height: var(--size);
         text-align: center;
-        font-size: 2rem;
+        font-size: var(--size);
+    }
+
+    .drawer-link {
+        cursor: pointer;
+        padding: 1rem;
+        border-bottom: 1px solid rgba(255,255,255,0.2);
     }
 </style>
