@@ -63,14 +63,21 @@
 .ql-editor h4,
 .ql-editor h5,
 .ql-editor h6 {
+    counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;
+}
+
+.ql-editor p,
+.ql-editor ol,
+.ql-editor ul,
+.ql-editor pre,
+.ql-editor blockquote {
     margin: 0;
     padding: 0;
-    counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;
 }
 
 .ql-editor ol,
 .ql-editor ul {
-    padding-left: 1.5em;
+    padding-left: .75em;
 }
 
 .ql-editor ol>li,
@@ -498,12 +505,11 @@
 }
 
 .ql-editor.ql-blank::before {
-    /* color: rgba(0, 0, 0, 0.6); */
-    color: rgba(255, 255, 255, 0.6);
     content: attr(data-placeholder);
-    font-style: italic;
     left: 15px;
     pointer-events: none;
     position: absolute;
     right: 15px;
+    /* font-style: italic; */
+    opacity: 0.3;
 }

@@ -2,15 +2,8 @@
     import {  onMount } from 'svelte'
     import Quill from "quill";
 
+    // icon overrides
     var icons = Quill.import('ui/icons');
-
-    icons['bold'] = 'B';
-    icons['italic'] = 'I';
-    icons['underline'] = 'U';
-
-    icons['code-block'] = '{ }';
-    icons['blockquote'] = '>';
-    
     icons['header']['1'] = 'H1';
     icons['header']['2'] = 'H2';
     icons['header']['3'] = 'H3';

@@ -1,0 +1,62 @@
+/*
+ * Toolbar
+ */
+
+.tool.ql-active {
+    background-color: rgb(107, 107, 107) !important;
+}
+
+.tool svg {
+    width: 1.3rem;
+    height: 1.3rem;
+    margin: 0.35rem 0;
+}
+
+.tool .ql-stroke {
+    fill: none;
+    stroke: #fff;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.25;
+}
+
+.tool .ql-stroke-miter {
+    fill: none;
+    stroke: #fff;
+    stroke-miterlimit: 10;
+    stroke-width: 1.25;
+}
+
+.tool .ql-fill,
+.tool .ql-stroke.ql-fill {
+    fill: #fff;
+}
+
+.tool .ql-empty {
+    fill: none;
+}
+
+.tool .ql-even {
+    fill-rule: evenodd;
+}
+
+.tool .ql-thin,
+.tool .ql-stroke.ql-thin {
+    stroke-width: 1;
+}
+
+.tool .ql-transparent {
+    opacity: 0.4;
+}
+
+.tool .ql-direction svg:last-child {
+    display: none;
+}
+
+.tool .ql-direction.ql-active svg:last-child {
+    display: inline;
+}
+
+.tool .ql-direction.ql-active svg:first-child {
+    display: none;
+}

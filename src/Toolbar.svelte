@@ -11,11 +11,18 @@ export let openMenu: () => void;
     <button class="tool ql-bold"></button>
     <button class="tool ql-italic"></button>
     <button class="tool ql-underline"></button>
+    <button class="tool ql-strike"></button>
+    <button class="tool">test button</button>
 
     <span class="divider"></span>
     
     <button class="tool ql-code-block"></button>
     <button class="tool ql-blockquote"></button>
+    
+    <span class="divider"></span>
+
+    <button class="tool ql-list" value="bullet"></button>
+    <button class="tool ql-list" value="ordered"></button>
     
     <span class="divider"></span>
 
@@ -35,6 +42,12 @@ export let openMenu: () => void;
         display: flex;
         gap: 0.25em;
         overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: none;
+    }
+
+    .toolbar:hover {
+        scrollbar-width: auto;
     }
 
     .divider {
@@ -58,5 +71,6 @@ export let openMenu: () => void;
 
         background-color: #444444;
         color: rgb(211, 211, 211);
+        cursor: pointer;
     }
 </style>
