@@ -4,7 +4,7 @@
     import Toolbar from "./Toolbar.svelte";
 
     let drawerOpen = false;
-    let content: string = 'hello!';
+    let content: string;
 </script>
 
 <main>
