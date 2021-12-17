@@ -15,7 +15,7 @@
     const placeholders = [
         "What's on your mind?",
         "What do you want to accomplish today?",
-        "What process can be fixed or improved?",
+        "What process can you fix or improve?",
         "What do you need help with?",
         "What's your top priority right now?",
         "What could you have done better in the last week?",

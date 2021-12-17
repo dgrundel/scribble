@@ -82,7 +82,7 @@
 }
 
 .ql-editor ul>li::before {
-    content: '\2022';
+    content: url("data:image/svg+xml;utf8,<svg width='1em' height='1em' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'><circle cx='60' cy='65' r='18' fill='white'/></svg>");
 }
 
 .ql-editor ul[data-checked=true],
