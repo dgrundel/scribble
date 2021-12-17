@@ -1,20 +1,34 @@
 <script lang="ts">
     import Drawer from "./Drawer.svelte";
     import Editor from "./Editor.svelte";
+    import Spinner from "./Spinner.svelte";
     import Toolbar from "./Toolbar.svelte";
 
+    let ready = false;
     let drawerOpen = false;
     let content: string;
+
+    const isCordova = () => !window.location.protocol.match(/^http[s]?/);
+
+    if (isCordova()) {
+        document.addEventListener("deviceready", () => ready = true, false);
+    } else {
+        ready = true;
+    }
 </script>
 
 <main>
-    <Drawer 
-        isOpen={drawerOpen}
-        close={() => drawerOpen = false}
-        setContent={c => content = c}
-    />
-    <Toolbar openMenu={() => drawerOpen = true}/>
-    <Editor content={content}/>
+    {#if ready}
+        <Drawer 
+            isOpen={drawerOpen}
+            close={() => drawerOpen = false}
+            setContent={c => content = c}
+        />
+        <Toolbar openMenu={() => drawerOpen = true}/>
+        <Editor content={content}/>
+    {:else}
+        <Spinner/>
+    {/if}
 </main>
 
 <style>
