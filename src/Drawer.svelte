@@ -1,7 +1,9 @@
 <script lang="ts">
+import { goToPage } from "./router";
+
+
     export let isOpen: boolean = false;
     export let close: () => void;
-    export let setContent: (c: string) => void;
 
     let overlay;
     const overlayClick = e => {
@@ -9,14 +11,8 @@
             close();
         }
     };
-</script>
 
-<div class="overlay {isOpen ? 'open' : ''}" bind:this={overlay} on:click={overlayClick}>
-    <div class="drawer">
-        <div class="close-button" on:click={close}>&times;</div>
-        
-        <div class="drawer-link" on:click={() => {
-            setContent(`All children, except one, grow up. They soon know that they will grow up, and the way Wendy knew was this. One day when she was two years old she was playing in a garden, and she plucked another flower and ran with it to her mother. I suppose she must have looked rather delightful, for Mrs. Darling put her hand to her heart and cried, 'Oh, why can't you remain like this for ever!' This was all that passed between them on the subject, but henceforth Wendy knew that she must grow up. You always know after you are two. Two is the beginning of the end.
+    const peterPan = `All children, except one, grow up. They soon know that they will grow up, and the way Wendy knew was this. One day when she was two years old she was playing in a garden, and she plucked another flower and ran with it to her mother. I suppose she must have looked rather delightful, for Mrs. Darling put her hand to her heart and cried, 'Oh, why can't you remain like this for ever!' This was all that passed between them on the subject, but henceforth Wendy knew that she must grow up. You always know after you are two. Two is the beginning of the end.
 
 Of course they lived at 14, and until Wendy came her mother was the chief one. She was a lovely lady, with a romantic mind and such a sweet mocking mouth. Her romantic mind was like the tiny boxes, one within the other, that come from the puzzling East, however many you discover there is always one more; and her sweet mocking mouth had one kiss on it that Wendy could never get, though there it was, perfectly conspicuous in the right-hand corner.
 
@@ -24,9 +20,21 @@ The way Mr. Darling won her was this: the many gentlemen who had been boys when 
 
 Mr. Darling used to boast to Wendy that her mother not only loved him but respected him. He was one of those deep ones who know about stocks and shares. Of course no one really knows, but he quite seemed to know, and he often said stocks were up and shares were down in a way that would have made any woman respect him.
 
-Mrs. Darling was married in white, and at first she kept the books perfectly, almost gleefully, as if it were a game, not so much as a brussels sprout was missing; but by and by whole cauliflowers dropped out, and instead of them there were pictures of babies without faces. She drew them when she should have been totting up. They were Mrs. Darling's guesses.`);
+Mrs. Darling was married in white, and at first she kept the books perfectly, almost gleefully, as if it were a game, not so much as a brussels sprout was missing; but by and by whole cauliflowers dropped out, and instead of them there were pictures of babies without faces. She drew them when she should have been totting up. They were Mrs. Darling's guesses.`;
+</script>
 
-            close();
+<div class="overlay {isOpen ? 'open' : ''}" bind:this={overlay} on:click={overlayClick}>
+    <div class="drawer">
+        <div class="close-button" on:click={close}>&times;</div>
+        
+        <div class="drawer-link" on:click={() => {
+            goToPage('settings');
+        }}>
+            Settings
+        </div>
+
+        <div class="drawer-link" on:click={() => {
+            goToPage('editor', { content: peterPan });
         }}>Peter Pan</div>
     </div>
 </div>

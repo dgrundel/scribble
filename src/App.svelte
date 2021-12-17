@@ -1,12 +1,20 @@
 <script lang="ts">
+    import type { SvelteComponent } from "svelte";
     import Drawer from "./Drawer.svelte";
     import Editor from "./Editor.svelte";
+    import { onPageChange } from "./router";
     import Spinner from "./Spinner.svelte";
-    import Toolbar from "./Toolbar.svelte";
 
+    let page: typeof SvelteComponent = Editor;
+    let props: { [k: string]: any } = { content: 'Hi!' }
     let ready = false;
     let drawerOpen = false;
-    let content: string;
+
+    onPageChange((component, componentProps) => {
+        drawerOpen = false;
+        page = component;
+        props = componentProps;
+    });
 
     const isCordova = () => !window.location.protocol.match(/^http[s]?/);
 
@@ -22,10 +30,9 @@
         <Drawer 
             isOpen={drawerOpen}
             close={() => drawerOpen = false}
-            setContent={c => content = c}
         />
-        <Toolbar openMenu={() => drawerOpen = true}/>
-        <Editor content={content}/>
+        
+        <svelte:component this={page} {...props} openMenu={() => drawerOpen = true} />
     {:else}
         <Spinner/>
     {/if}

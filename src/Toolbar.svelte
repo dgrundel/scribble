@@ -1,6 +1,4 @@
 <script lang="ts">
-import Flyout from "./Flyout.svelte";
-
 export let openMenu: () => void;
 </script>
 
@@ -78,6 +76,5 @@ export let openMenu: () => void;
         background-color: #444444;
         color: rgb(211, 211, 211);
         cursor: pointer;
-        
     }
 </style>
