@@ -1,5 +1,6 @@
 <script lang="ts">
     import debounce from 'lodash.debounce';
+import Panel from './Panel.svelte';
     import { goToPage } from './router';
 
     let dropboxApiKey = localStorage.getItem('dropboxApiKey');
@@ -10,11 +11,33 @@
     }, 500);
 </script>
 
-<div class="settings">
-    <label>
-        Dropbox API Key
-        <input type="text" bind:value={dropboxApiKey} on:input={updateDropboxApiKey}>
-    </label>
+<Panel buttons={[{
+    label: 'Back',
+    onClick: () => goToPage('editor'),
+}]}>
+    <svelte:fragment slot="content">
+        <label data-text="Dropbox API Key">
+            <input type="text" bind:value={dropboxApiKey} on:input={updateDropboxApiKey}>
+        </label>
+    </svelte:fragment>
+</Panel>
 
-    <button on:click={() => goToPage('editor')}>Done</button>
-</div>
+<style>
+    label {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        gap: .3em;
+        margin: .6em;
+    }
+    label::before {
+        content: attr(data-text);
+        display: block;
+    }
+    input {
+        background-color: #313131;
+        color: inherit;
+        border: 0 none;
+        border-bottom: 1px solid #595959;
+    }
+</style>
