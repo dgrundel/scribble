@@ -1,4 +1,6 @@
 <script lang="ts">
+import App from "./App.svelte";
+import List from "./List.svelte";
 import { goToPage } from "./router";
 
 
@@ -36,36 +38,24 @@ Mrs. Darling was married in white, and at first she kept the books perfectly, al
     <div class="drawer">
         <div class="close-button" on:click={close}>&times;</div>
         
-        <div class="drawer-link">
-            {#if all.length > 0}
-                <span class="badge">{all.length}</span>
-            {/if}
-            All
-        </div>
-        
-        <div class="drawer-link">
-            {#if starred.length > 0}
-                <span class="badge">{starred.length}</span>
-            {/if}
-            Starred
-        </div>
-
-        {#each tags as tag}
-            <div class="drawer-link">
-                {#if tag.count > 0}
-                    <span class="badge">{tag.count}</span>
-                {/if}
-                {tag.name}
-            </div>
-        {/each}
-
-        <div class="drawer-link" on:click={() => goToPage('editor', { content: peterPan })}>
-            Peter Pan
-        </div>
-
-        <div class="drawer-link" on:click={() => goToPage('settings')}>
-            Settings
-        </div>
+        <List items={[
+            {
+                label: 'All',
+                badge: all.length ? all.length.toString() : '',
+            },{
+                label: 'Starred',
+                badge: starred.length ? starred.length.toString() : '',
+            }, ...tags.map(t => ({
+                label: t.name,
+                badge: t.count ? t.count.toString() : '',
+            })), {
+                label: 'Peter and Wendy',
+                onClick: () => goToPage('editor', { content: peterPan }),
+            }, {
+                label: 'Settings',
+                onClick: () => goToPage('settings'),
+            },
+        ]} />
     </div>
 </div>
 
@@ -139,18 +129,5 @@ Mrs. Darling was married in white, and at first she kept the books perfectly, al
         line-height: var(--size);
         text-align: center;
         font-size: var(--size);
-    }
-
-    .drawer .badge {
-        background-color: rgba(255, 238, 100, 0.7);
-        color: #333;
-        padding: .1em .3em;
-        border-radius: .3em;
-        float: right;
-    }
-    .drawer-link {
-        cursor: pointer;
-        padding: 1rem;
-        border-bottom: 1px solid rgba(255,255,255,0.2);
     }
 </style>
