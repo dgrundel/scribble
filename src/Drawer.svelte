@@ -5,6 +5,15 @@ import { goToPage } from "./router";
     export let isOpen: boolean = false;
     export let close: () => void;
 
+    let all = [];
+    let starred = [];
+    let tags = [
+        { name: 'foo', count: 5, },
+        { name: 'bar', count: 27, },
+        { name: 'baz', count: 3, },
+        { name: 'qux', count: 2293, },
+    ];
+
     let overlay;
     const overlayClick = e => {
         if (e.target === overlay) {
@@ -27,15 +36,36 @@ Mrs. Darling was married in white, and at first she kept the books perfectly, al
     <div class="drawer">
         <div class="close-button" on:click={close}>&times;</div>
         
-        <div class="drawer-link" on:click={() => {
-            goToPage('settings');
-        }}>
-            Settings
+        <div class="drawer-link">
+            {#if all.length > 0}
+                <span class="badge">{all.length}</span>
+            {/if}
+            All
+        </div>
+        
+        <div class="drawer-link">
+            {#if starred.length > 0}
+                <span class="badge">{starred.length}</span>
+            {/if}
+            Starred
         </div>
 
-        <div class="drawer-link" on:click={() => {
-            goToPage('editor', { content: peterPan });
-        }}>Peter Pan</div>
+        {#each tags as tag}
+            <div class="drawer-link">
+                {#if tag.count > 0}
+                    <span class="badge">{tag.count}</span>
+                {/if}
+                {tag.name}
+            </div>
+        {/each}
+
+        <div class="drawer-link" on:click={() => goToPage('editor', { content: peterPan })}>
+            Peter Pan
+        </div>
+
+        <div class="drawer-link" on:click={() => goToPage('settings')}>
+            Settings
+        </div>
     </div>
 </div>
 
@@ -111,6 +141,13 @@ Mrs. Darling was married in white, and at first she kept the books perfectly, al
         font-size: var(--size);
     }
 
+    .drawer .badge {
+        background-color: rgba(255, 238, 100, 0.7);
+        color: #333;
+        padding: .1em .3em;
+        border-radius: .3em;
+        float: right;
+    }
     .drawer-link {
         cursor: pointer;
         padding: 1rem;
