@@ -1,10 +1,12 @@
 import type { SvelteComponent } from "svelte";
 import Editor from "./Editor.svelte";
 import Settings from "./Settings.svelte";
+import NoteList from "./NoteList.svelte";
 
 const pages: { [pageName: string]: typeof SvelteComponent } = {
     editor: Editor,
     settings: Settings,
+    noteList: NoteList,
 };
 
 export type PageName = keyof typeof pages;
