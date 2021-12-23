@@ -111,3 +111,25 @@ pre, pre.ql-syntax {
 	overflow: auto;
 	border-radius: .3rem;
 }
+
+.layout-toolbar button {
+    border: 0 none;
+    border-radius: var(--radius);
+    margin: 0;
+    padding: 0 var(--pad);
+
+    line-height: var(--size);
+    height: var(--size);
+    min-width: var(--size);
+    flex-shrink: 0;
+    inline-size: max-content;
+    text-align: center;
+
+    background-color: #444444;
+    color: rgb(211, 211, 211);
+    cursor: pointer;
+}
+
+.layout-toolbar button:hover {
+    background-color: #505050;
+}

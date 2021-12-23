@@ -1,5 +1,4 @@
 <script lang="ts">
-import App from "./App.svelte";
 import List from "./List.svelte";
 import { goToPage } from "./router";
 
