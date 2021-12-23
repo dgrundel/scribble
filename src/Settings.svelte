@@ -27,12 +27,14 @@ import Panel from './Panel.svelte';
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: auto auto;
-        gap: .3em;
         margin: .6em;
     }
     label::before {
         content: attr(data-text);
         display: block;
+        text-transform: uppercase;
+        font-size: 0.9em;
+        opacity: 0.75;
     }
     input {
         background-color: #313131;
