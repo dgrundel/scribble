@@ -1,5 +1,6 @@
 <script lang="ts">
     import ListItem from "./ListItem.svelte";
+    import Home from "tabler-icons-svelte/icons/Home.svelte";
     import Files from "tabler-icons-svelte/icons/Files.svelte";
     import FileText from "tabler-icons-svelte/icons/FileText.svelte";
     import Plus from "tabler-icons-svelte/icons/Plus.svelte";
@@ -8,8 +9,6 @@
     import Tag from "tabler-icons-svelte/icons/Tag.svelte";
     import X from "tabler-icons-svelte/icons/X.svelte";
     import { goToPage } from "./router";
-import Icon from "./Icon.svelte";
-
 
     export let isOpen: boolean = false;
     export let close: () => void;
@@ -45,36 +44,43 @@ Mrs. Darling was married in white, and at first she kept the books perfectly, al
     <div class="drawer">
         <div class="close-button" on:click={close}><X/></div>
         
-        <ListItem onClick={() => goToPage('editor')}>
-            <Icon icon={Plus}/> New
+        <ListItem icon={Home} onClick={() => goToPage('home')}>
+            Home
+        </ListItem>
+        
+        <ListItem icon={Plus} onClick={() => goToPage('editor')}>
+            New
         </ListItem>
 
         <ListItem
+            icon={Files}
             badge={all.length ? all.length.toString() : ''}
             onClick={() => goToPage('noteList')}>
-            <Icon icon={Files}/> All
+            All
         </ListItem>
 
         <ListItem
+            icon={Star}
             badge={all.length ? all.length.toString() : ''}
             onClick={() => goToPage('noteList')}>
-            <Icon icon={Star}/> Starred
+            Starred
         </ListItem>
 
         {#each tags as tag}
             <ListItem
+                icon={Tag}
                 badge={tag.count ? tag.count.toString() : ''}
                 onClick={() => goToPage('noteList')}>
-                <Icon icon={Tag}/> {tag.name}
+                {tag.name}
             </ListItem>
         {/each}
 
-        <ListItem onClick={() => goToPage('editor', { content: peterPan })}>
-            <Icon icon={FileText}/> Peter and Wendy
+        <ListItem icon={FileText} onClick={() => goToPage('editor', { content: peterPan })}>
+            Peter and Wendy
         </ListItem>
 
-        <ListItem onClick={() => goToPage('settings')}>
-            <Icon icon={Settings}/> Settings
+        <ListItem icon={Settings} onClick={() => goToPage('settings')}>
+            Settings
         </ListItem>
     </div>
 </div>

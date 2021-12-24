@@ -1,12 +1,12 @@
 <script lang="ts">
     import type { SvelteComponent } from "svelte";
     import Drawer from "./Drawer.svelte";
-    import Editor from "./Editor.svelte";
+    import Home from "./Home.svelte";
     import { onPageChange } from "./router";
     import Spinner from "./Spinner.svelte";
 
-    let page: typeof SvelteComponent = Editor;
-    let props: { [k: string]: any } = { content: '' }
+    let page: typeof SvelteComponent = Home;
+    let props: { [k: string]: any } = { };
     let ready = false;
     let drawerOpen = false;
 
