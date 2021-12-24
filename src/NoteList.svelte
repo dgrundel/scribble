@@ -1,6 +1,6 @@
 <script lang="ts">
 import Layout from "./Layout.svelte";
-import List from "./List.svelte";
+import ListItem from "./ListItem.svelte";
 
     export let openMenu: () => void;
     interface Note {
@@ -13,13 +13,14 @@ import List from "./List.svelte";
             title: 'World',
         },
     ];
-    let listItems = notes.map(note => ({
-        label: note.title,
-    }));
 </script>
 
 <Layout {openMenu}>
     <svelte:fragment slot="content">
-        <List items={listItems}/>
+        {#each notes as note}
+            <ListItem>
+                {note.title}
+            </ListItem>
+        {/each}
     </svelte:fragment>
 </Layout>

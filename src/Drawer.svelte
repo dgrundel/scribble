@@ -1,6 +1,9 @@
 <script lang="ts">
-import List from "./List.svelte";
-import { goToPage } from "./router";
+    import X from "tabler-icons-svelte/icons/X.svelte";
+    import Star from "tabler-icons-svelte/icons/Star.svelte";
+    import Settings from "tabler-icons-svelte/icons/Settings.svelte";
+    import ListItem from "./ListItem.svelte";
+    import { goToPage } from "./router";
 
 
     export let isOpen: boolean = false;
@@ -35,29 +38,35 @@ Mrs. Darling was married in white, and at first she kept the books perfectly, al
 
 <div class="overlay {isOpen ? 'open' : ''}" bind:this={overlay} on:click={overlayClick}>
     <div class="drawer">
-        <div class="close-button" on:click={close}>&times;</div>
+        <div class="close-button" on:click={close}><X/></div>
         
-        <List items={[
-            {
-                label: 'All',
-                badge: all.length ? all.length.toString() : '',
-                onClick: () => goToPage('noteList'),
-            },{
-                label: 'Starred',
-                badge: starred.length ? starred.length.toString() : '',
-                onClick: () => goToPage('noteList'),
-            }, ...tags.map(t => ({
-                label: t.name,
-                badge: t.count ? t.count.toString() : '',
-                onClick: () => goToPage('noteList'),
-            })), {
-                label: 'Peter and Wendy',
-                onClick: () => goToPage('editor', { content: peterPan }),
-            }, {
-                label: 'Settings',
-                onClick: () => goToPage('settings'),
-            },
-        ]} />
+        <ListItem
+            badge={all.length ? all.length.toString() : ''}
+            onClick={() => goToPage('noteList')}>
+            All
+        </ListItem>
+
+        <ListItem
+            badge={all.length ? all.length.toString() : ''}
+            onClick={() => goToPage('noteList')}>
+            <Star/> Starred
+        </ListItem>
+
+        {#each tags as tag}
+            <ListItem
+                badge={tag.count ? tag.count.toString() : ''}
+                onClick={() => goToPage('noteList')}>
+                {tag.name}
+            </ListItem>
+        {/each}
+
+        <ListItem onClick={() => goToPage('editor', { content: peterPan })}>
+            Peter Pan
+        </ListItem>
+
+        <ListItem onClick={() => goToPage('settings')}>
+            <Settings/> Settings
+        </ListItem>
     </div>
 </div>
 

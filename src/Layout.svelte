@@ -1,10 +1,11 @@
 <script lang="ts">
+    import Menu from "tabler-icons-svelte/icons/Menu.svelte";
     export let openMenu: () => void;
 </script>
 
 <div class="layout">
     <div class="layout-toolbar">
-        <button style="background-color: transparent" on:click={openMenu}>&bull;&bull;&bull;</button>
+        <button style="background-color: transparent" on:click={openMenu}><Menu/></button>
         <slot name="toolbar"/>
     </div>
     <div class="layout-content">
