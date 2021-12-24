@@ -9,6 +9,7 @@
     position: relative;
     overflow-y: auto;
     scrollbar-width: thin;
+    height: 100%;
 }
 
 .ql-container.ql-disabled .ql-tooltip {

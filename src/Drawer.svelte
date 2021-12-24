@@ -2,6 +2,7 @@
     import ListItem from "./ListItem.svelte";
     import Files from "tabler-icons-svelte/icons/Files.svelte";
     import FileText from "tabler-icons-svelte/icons/FileText.svelte";
+    import Plus from "tabler-icons-svelte/icons/Plus.svelte";
     import Star from "tabler-icons-svelte/icons/Star.svelte";
     import Settings from "tabler-icons-svelte/icons/Settings.svelte";
     import Tag from "tabler-icons-svelte/icons/Tag.svelte";
@@ -44,6 +45,10 @@ Mrs. Darling was married in white, and at first she kept the books perfectly, al
     <div class="drawer">
         <div class="close-button" on:click={close}><X/></div>
         
+        <ListItem onClick={() => goToPage('editor')}>
+            <Icon icon={Plus}/> New
+        </ListItem>
+
         <ListItem
             badge={all.length ? all.length.toString() : ''}
             onClick={() => goToPage('noteList')}>

@@ -6,7 +6,7 @@
     import Spinner from "./Spinner.svelte";
 
     let page: typeof SvelteComponent = Editor;
-    let props: { [k: string]: any } = { content: 'Hi!' }
+    let props: { [k: string]: any } = { content: '' }
     let ready = false;
     let drawerOpen = false;
 
