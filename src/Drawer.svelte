@@ -1,9 +1,13 @@
 <script lang="ts">
-    import X from "tabler-icons-svelte/icons/X.svelte";
+    import ListItem from "./ListItem.svelte";
+    import Files from "tabler-icons-svelte/icons/Files.svelte";
+    import FileText from "tabler-icons-svelte/icons/FileText.svelte";
     import Star from "tabler-icons-svelte/icons/Star.svelte";
     import Settings from "tabler-icons-svelte/icons/Settings.svelte";
-    import ListItem from "./ListItem.svelte";
+    import Tag from "tabler-icons-svelte/icons/Tag.svelte";
+    import X from "tabler-icons-svelte/icons/X.svelte";
     import { goToPage } from "./router";
+import Icon from "./Icon.svelte";
 
 
     export let isOpen: boolean = false;
@@ -43,29 +47,29 @@ Mrs. Darling was married in white, and at first she kept the books perfectly, al
         <ListItem
             badge={all.length ? all.length.toString() : ''}
             onClick={() => goToPage('noteList')}>
-            All
+            <Icon icon={Files}/> All
         </ListItem>
 
         <ListItem
             badge={all.length ? all.length.toString() : ''}
             onClick={() => goToPage('noteList')}>
-            <Star/> Starred
+            <Icon icon={Star}/> Starred
         </ListItem>
 
         {#each tags as tag}
             <ListItem
                 badge={tag.count ? tag.count.toString() : ''}
                 onClick={() => goToPage('noteList')}>
-                {tag.name}
+                <Icon icon={Tag}/> {tag.name}
             </ListItem>
         {/each}
 
         <ListItem onClick={() => goToPage('editor', { content: peterPan })}>
-            Peter Pan
+            <Icon icon={FileText}/> Peter and Wendy
         </ListItem>
 
         <ListItem onClick={() => goToPage('settings')}>
-            <Settings/> Settings
+            <Icon icon={Settings}/> Settings
         </ListItem>
     </div>
 </div>

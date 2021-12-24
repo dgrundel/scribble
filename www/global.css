@@ -139,3 +139,10 @@ pre, pre.ql-syntax {
     border-left: 1px solid;
     opacity: 0.15;
 }
+
+svg {
+    display: inline-block;
+    vertical-align: baseline;
+    width: var(--svg-size);
+    height: var(--svg-size);
+}

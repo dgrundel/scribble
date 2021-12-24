@@ -1,11 +1,14 @@
 <script lang="ts">
     import Menu from "tabler-icons-svelte/icons/Menu.svelte";
+import Icon from "./Icon.svelte";
     export let openMenu: () => void;
 </script>
 
 <div class="layout">
     <div class="layout-toolbar">
-        <button style="background-color: transparent" on:click={openMenu}><Menu/></button>
+        <button style="background-color: transparent" on:click={openMenu}>
+            <Icon icon={Menu} strokeWidth={2} />
+        </button>
         <slot name="toolbar"/>
     </div>
     <div class="layout-content">
@@ -19,6 +22,7 @@
         --pad: .6em;
         --spacing: calc(var(--pad) / 2);
         --radius: var(--spacing);
+        --svg-size: 1.3em;
 
         display: grid;
         grid-template-columns: 1fr;

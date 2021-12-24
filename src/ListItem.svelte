@@ -3,7 +3,7 @@
     export let onClick: (() => void) | undefined = undefined;
 </script>
 
-<div class={onClick ? 'clickable' : ''} on:click={onClick}>
+<div class={`list-item ${onClick ? 'clickable' : ''}`} on:click={onClick}>
     {#if badge}
         <span class="badge">{badge}</span>
     {/if}
@@ -12,6 +12,8 @@
 
 <style>
     div {
+        --svg-size: 1em;
+        
         padding: 1rem;
         border-bottom: 1px solid rgba(255,255,255,0.2);
     }
