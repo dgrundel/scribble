@@ -41,9 +41,11 @@ Mrs. Darling was married in white, and at first she kept the books perfectly, al
             {
                 label: 'All',
                 badge: all.length ? all.length.toString() : '',
+                onClick: () => goToPage('noteList'),
             },{
                 label: 'Starred',
                 badge: starred.length ? starred.length.toString() : '',
+                onClick: () => goToPage('noteList'),
             }, ...tags.map(t => ({
                 label: t.name,
                 badge: t.count ? t.count.toString() : '',

@@ -133,3 +133,9 @@ pre, pre.ql-syntax {
 .layout-toolbar button:hover {
     background-color: #505050;
 }
+
+.layout-toolbar .divider {
+    margin: .2em;
+    border-left: 1px solid;
+    opacity: 0.15;
+}
