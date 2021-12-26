@@ -4,6 +4,7 @@
     import FileText from "tabler-icons-svelte/icons/FileText.svelte";
     import Plus from "tabler-icons-svelte/icons/Plus.svelte";
     import { goToPage } from "./router";
+import NoteListItem from "./NoteListItem.svelte";
 
     export let openMenu: () => void;
 </script>
@@ -16,15 +17,15 @@
         </ListItem>
 
         <h2 class="pad">Recent Items</h2>
-        <ListItem icon={FileText}>
+        <NoteListItem icon={FileText} onClick={() => goToPage('editor')}>
             Foo
-        </ListItem>
-        <ListItem icon={FileText}>
+        </NoteListItem>
+        <NoteListItem icon={FileText} onClick={() => goToPage('editor')}>
             Bar
-        </ListItem>
-        <ListItem icon={FileText}>
+        </NoteListItem>
+        <NoteListItem icon={FileText} onClick={() => goToPage('editor')}>
             Baz
-        </ListItem>
+        </NoteListItem>
     </svelte:fragment>
 </Layout>
 
