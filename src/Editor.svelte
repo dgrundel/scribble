@@ -1,10 +1,13 @@
 <script lang="ts">
+    import Tag from "tabler-icons-svelte/icons/Tag.svelte";
     import Layout from "./Layout.svelte";
+    import Icon from "./Icon.svelte";
     import {  onMount } from 'svelte'
     import Quill from "quill";
+    import Flyout from "./Flyout.svelte";
 
     export let openMenu: () => void;
-    export let content: string;
+    export let content: string = '';
 
     // icon overrides
     var icons = Quill.import('ui/icons');
@@ -50,6 +53,17 @@
 
 <Layout {openMenu}>
     <svelte:fragment slot="toolbar">
+        <span class="divider"></span>
+
+        <Flyout>
+            <svelte:fragment slot="target">
+                <button><Icon icon={Tag}/></button>
+            </svelte:fragment>
+            <svelte:fragment slot="content">
+                hello
+            </svelte:fragment>
+        </Flyout>
+    
         <span class="divider"></span>
 
         <button class="ql-bold"></button>

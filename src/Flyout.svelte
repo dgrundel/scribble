@@ -1,4 +1,5 @@
 <script lang="ts">
+    let timeout;
     let target;
     let flyout;
 
@@ -8,33 +9,53 @@
         const { top, left } = target.getBoundingClientRect();
         const { scrollX, scrollY } = window;
 
-        console.log({
-            target, top, left, height, width, flyoutWidth, scrollY, scrollX
-        })
-
         flyout.style.top = (top + height + scrollY) + 'px';
         flyout.style.left = (left + (width / 2) + scrollX - (flyoutWidth / 2)) + 'px';
     };
+
+    const show = () => {
+        flyout.style.display = 'block';
+    };
+
+    const hide = () => {
+        flyout.style.display = 'none';
+    };
+
+    const click = () => {
+        // toggle display
+        flyout.style.display === 'none' ? show() : hide();
+    };
+
+    const mouseenter = () => {
+        if (timeout) {
+            clearTimeout(timeout);
+        }
+
+        show();
+        updatePosition();
+    };
+    const mouseleave = () => {
+        timeout = setTimeout(hide, 1000);
+    };
 </script>
 
-<div class="flyout-target" bind:this={target} on:mouseenter={updatePosition}>
+<span class="flyout-target" bind:this={target} on:mouseenter={mouseenter} on:mouseleave={mouseleave} on:click={click}>
     <slot name="target"></slot>
+</span>
 
-    <div class="flyout" bind:this={flyout}>
-        <div class="flyout-content">
-            <slot name="content"></slot>
-        </div>
+<div class="flyout" bind:this={flyout} on:mouseenter={mouseenter} on:mouseleave={mouseleave}>
+    <div class="flyout-content">
+        <slot name="content"></slot>
     </div>
 </div>
 
 <style>
     .flyout-target {
-        --flyout-color: #000;
-
         display: inline-block;
     }
-
     .flyout {
+        --flyout-color: #000;
+
         display: none;
         z-index: 999;
         position: absolute;
@@ -55,14 +76,9 @@
         border-bottom: var(--size) solid var(--flyout-color);
     }
 
-    .flyout-target:hover .flyout {
-        display: block;
-    }
-
     .flyout-content {
         padding: .25rem .5rem;
         border-radius: 0.3rem;
         background-color: var(--flyout-color);
-        /* box-shadow: 0 0 5rem rgba(255,255,255, 0.2); */
     }
 </style>

@@ -27,12 +27,6 @@ import SwipeContainer from "./SwipeContainer.svelte";
         <NoteListItem icon={FileText} onClick={() => goToPage('editor', { content: 'baz' })}>
             Baz
         </NoteListItem>
-
-        <h2 class="pad">Test</h2>
-
-        <SwipeContainer onLeft={() => console.log('left!')} onRight={() => console.log('right!')}>
-            Swipe me!
-        </SwipeContainer>
     </svelte:fragment>
 </Layout>
 

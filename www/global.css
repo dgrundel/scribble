@@ -113,6 +113,7 @@ pre, pre.ql-syntax {
 }
 
 .layout-toolbar button {
+    box-sizing: content-box;
     border: 0 none;
     border-radius: var(--radius);
     margin: 0;
@@ -120,7 +121,7 @@ pre, pre.ql-syntax {
 
     line-height: var(--size);
     height: var(--size);
-    min-width: var(--size);
+    min-width: 1ex;
     flex-shrink: 0;
     inline-size: max-content;
     text-align: center;
