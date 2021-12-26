@@ -12,7 +12,8 @@ html, body {
 	background-color: var(--main-background-color);
 	color: var(--text-color);
 	font-family: var(--display-font-family);
-	font-size: 16px;
+	font-size: var(--font-size);
+    line-height: var(--line-height);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -129,6 +130,10 @@ pre, pre.ql-syntax {
     background-color: #444444;
     color: rgb(211, 211, 211);
     cursor: pointer;
+}
+
+.layout-toolbar button.active {
+    background-color: rgb(107, 107, 107) !important;
 }
 
 .layout-toolbar button:hover {

@@ -1,14 +1,18 @@
 <script lang="ts">
     import Tag from "tabler-icons-svelte/icons/Tag.svelte";
+    import Check from "tabler-icons-svelte/icons/Check.svelte";
     import Layout from "./Layout.svelte";
     import Icon from "./Icon.svelte";
     import {  onMount } from 'svelte'
     import Quill from "quill";
     import Flyout from "./Flyout.svelte";
+    import TextInput from "./TextInput.svelte";
 
     export let openMenu: () => void;
     export let content: string = '';
 
+    let tags: string[] = [];
+    
     // icon overrides
     var icons = Quill.import('ui/icons');
     icons['header']['1'] = 'H1';
@@ -49,18 +53,47 @@
     $: if (quill && content) {
         quill.insertText(0, content);
     }
+
+    let tagButtonActive = false;
+    let newTag = '';
+    
+    const addTagFromInput = () => {
+        tags = [...tags, newTag];
+        newTag = '';
+    };
+
+    const onTagInput = (e: InputEvent) => {
+        const t = e.target as HTMLInputElement;
+        newTag = t.value;
+    };
+
+    const onTagKeyup = (e: KeyboardEvent) => {
+        if (e.key === 'Enter' || e.keyCode === 13) {
+            addTagFromInput();
+        }
+    };
 </script>
 
 <Layout {openMenu}>
     <svelte:fragment slot="toolbar">
         <span class="divider"></span>
 
-        <Flyout>
+        <Flyout onShow={() => tagButtonActive = true} onHide={() => tagButtonActive = false}>
             <svelte:fragment slot="target">
-                <button><Icon icon={Tag}/></button>
+                <button class={tagButtonActive ? 'active' : ''}><Icon icon={Tag}/></button>
             </svelte:fragment>
             <svelte:fragment slot="content">
-                hello
+                {#each tags as tag}
+                    <label>
+                        <input type="checkbox" checked> {tag}
+                    </label>
+                {/each}
+                                
+                <TextInput label="New Tag" value={newTag} on:input={onTagInput} on:keyup={onTagKeyup}>
+                    <svelte:fragment slot="post">
+                        <button on:click={addTagFromInput}><Icon icon={Check}/></button>
+                    </svelte:fragment>
+                </TextInput>
             </svelte:fragment>
         </Flyout>
     

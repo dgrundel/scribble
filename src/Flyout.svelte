@@ -1,7 +1,10 @@
 <script lang="ts">
+    export let onShow: (() => void) | undefined = undefined;
+    export let onHide: (() => void) | undefined = undefined;
     let timeout;
     let target;
     let flyout;
+    let content;
 
     const updatePosition = () => {
         const { scrollHeight: height, offsetWidth: width } = target;
@@ -9,16 +12,23 @@
         const { top, left } = target.getBoundingClientRect();
         const { scrollX, scrollY } = window;
 
+        const flyoutLeft = left + (width / 2) + scrollX - (flyoutWidth / 2);
+        //offset the little triangle
+        const contentLeft = flyoutLeft < 0 ? Math.abs(flyoutLeft) :0;
+
         flyout.style.top = (top + height + scrollY) + 'px';
-        flyout.style.left = (left + (width / 2) + scrollX - (flyoutWidth / 2)) + 'px';
+        flyout.style.left = flyoutLeft + 'px';
+        content.style.left = contentLeft + 'px';
     };
 
     const show = () => {
         flyout.style.display = 'block';
+        onShow && onShow();
     };
 
     const hide = () => {
         flyout.style.display = 'none';
+        onHide && onHide();
     };
 
     const click = () => {
@@ -34,6 +44,7 @@
         show();
         updatePosition();
     };
+
     const mouseleave = () => {
         timeout = setTimeout(hide, 1000);
     };
@@ -44,7 +55,7 @@
 </span>
 
 <div class="flyout" bind:this={flyout} on:mouseenter={mouseenter} on:mouseleave={mouseleave}>
-    <div class="flyout-content">
+    <div class="flyout-content" bind:this={content}>
         <slot name="content"></slot>
     </div>
 </div>
@@ -54,13 +65,14 @@
         display: inline-block;
     }
     .flyout {
-        --flyout-color: #000;
+        --flyout-color: #111;
 
         display: none;
         z-index: 999;
         position: absolute;
         left: 0;
         top: 0;
+        max-width: 100vw;
     }
 
     .flyout::before {
@@ -74,11 +86,19 @@
         border-left: var(--size) solid transparent;
         border-right: var(--size) solid transparent;
         border-bottom: var(--size) solid var(--flyout-color);
+        position: relative;
+        z-index: 99;
     }
 
     .flyout-content {
-        padding: .25rem .5rem;
+        position: relative;
+        top: 0;
+        left: 0;
+        padding: .5rem .75rem;
+        margin: 0 .75rem;
         border-radius: 0.3rem;
         background-color: var(--flyout-color);
+        line-height: var(--line-height);
+        box-shadow: 0 0 1.5rem rgba(179, 179, 179, 0.1);
     }
 </style>
