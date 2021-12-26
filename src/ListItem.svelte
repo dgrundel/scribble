@@ -1,8 +1,6 @@
 <script lang="ts">
-import type { SvelteComponent } from "svelte";
-import Icon from "./Icon.svelte";
-
-
+    import type { SvelteComponent } from "svelte";
+    import Icon from "./Icon.svelte";
     export let icon: (typeof SvelteComponent) | undefined = undefined;
     export let badge: string = '';
     export let onClick: (() => void) | undefined = undefined;

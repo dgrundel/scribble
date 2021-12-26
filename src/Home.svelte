@@ -5,6 +5,7 @@
     import Plus from "tabler-icons-svelte/icons/Plus.svelte";
     import { goToPage } from "./router";
 import NoteListItem from "./NoteListItem.svelte";
+import SwipeContainer from "./SwipeContainer.svelte";
 
     export let openMenu: () => void;
 </script>
@@ -17,15 +18,21 @@ import NoteListItem from "./NoteListItem.svelte";
         </ListItem>
 
         <h2 class="pad">Recent Items</h2>
-        <NoteListItem icon={FileText} onClick={() => goToPage('editor')}>
+        <NoteListItem icon={FileText} onClick={() => goToPage('editor', { content: 'foo' })}>
             Foo
         </NoteListItem>
-        <NoteListItem icon={FileText} onClick={() => goToPage('editor')}>
+        <NoteListItem icon={FileText} onClick={() => goToPage('editor', { content: 'bar' })}>
             Bar
         </NoteListItem>
-        <NoteListItem icon={FileText} onClick={() => goToPage('editor')}>
+        <NoteListItem icon={FileText} onClick={() => goToPage('editor', { content: 'baz' })}>
             Baz
         </NoteListItem>
+
+        <h2 class="pad">Test</h2>
+
+        <SwipeContainer onLeft={() => console.log('left!')} onRight={() => console.log('right!')}>
+            Swipe me!
+        </SwipeContainer>
     </svelte:fragment>
 </Layout>
 
