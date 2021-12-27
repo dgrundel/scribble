@@ -152,3 +152,9 @@ svg {
     width: var(--svg-size);
     height: var(--svg-size);
 }
+
+.filled-star svg {
+    --color: gold;
+    stroke: var(--color);
+    fill: var(--color);
+}

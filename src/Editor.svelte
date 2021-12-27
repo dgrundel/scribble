@@ -1,6 +1,7 @@
 <script lang="ts">
     import Tag from "tabler-icons-svelte/icons/Tag.svelte";
     import Check from "tabler-icons-svelte/icons/Check.svelte";
+    import Star from "tabler-icons-svelte/icons/Star.svelte";
     import Layout from "./Layout.svelte";
     import Icon from "./Icon.svelte";
     import {  onMount } from 'svelte'
@@ -54,6 +55,8 @@
         quill.insertText(0, content);
     }
 
+    let isStarred = false;
+
     let tagButtonActive = false;
     let newTag = '';
     
@@ -78,6 +81,7 @@
     <svelte:fragment slot="toolbar">
         <span class="divider"></span>
 
+        <button class={isStarred ? 'active filled-star' : ''} on:click={() => isStarred = !isStarred}><Icon icon={Star}/></button>
         <Flyout onShow={() => tagButtonActive = true} onHide={() => tagButtonActive = false}>
             <svelte:fragment slot="target">
                 <button class={tagButtonActive ? 'active' : ''}><Icon icon={Tag}/></button>
