@@ -9,11 +9,26 @@ export interface Note {
     tags?: string[];
 }
 
+const NOTE_TITLE_MAX_CHARS = 180;
+export const parseNoteTitle = (body?: string): string => {
+    const line = body ? body.split('\n', 2)[0] : '';
+    // trim leading spaces and `#` chars
+    const trimmed = line.replace(/^[\s#]+/, '');
+
+    const shortened = trimmed.length > NOTE_TITLE_MAX_CHARS
+        ? trimmed.substring(0, NOTE_TITLE_MAX_CHARS)
+        : trimmed;
+
+    const title = shortened.trim();
+
+    return title || 'Untitled';
+}
+
 export const createNote = (props?: Partial<Note>): Note => {
     const now = new Date();
     const created = +now;
-    const title = now.toISOString();
-    const body = `# ${title}`;
+    const body = `# ${now.toLocaleString()}`;
+    const title = parseNoteTitle(body);
     return {
         created,
         updated: created,
@@ -68,11 +83,16 @@ class LocalStorageNoteStore implements NoteStore {
     saveNote(note: Note): Promise<Note> {
         return new Promise(resolve => {
             const store = this.getStore();
+            
+            // if no id, it's a new note
             if (!note.id) {
                 note.id = nanoid();
                 note.created = Date.now();
             }
+
+            // update other fields
             note.updated = Date.now();
+            note.title = parseNoteTitle(note.body);
             
             store[note.id] = note;
 

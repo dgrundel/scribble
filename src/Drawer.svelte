@@ -9,6 +9,7 @@
     import Tag from "tabler-icons-svelte/icons/Tag.svelte";
     import X from "tabler-icons-svelte/icons/X.svelte";
     import { goToPage } from "./router";
+    import { createNote } from "./Note";
 
     export let isOpen: boolean = false;
     export let close: () => void;
@@ -75,7 +76,7 @@ Mrs. Darling was married in white, and at first she kept the books perfectly, al
             </ListItem>
         {/each}
 
-        <ListItem icon={FileText} onClick={() => goToPage('editor', { content: peterPan })}>
+        <ListItem icon={FileText} onClick={() => goToPage('editor', { note: createNote({ body: peterPan }) })}>
             Peter and Wendy
         </ListItem>
 

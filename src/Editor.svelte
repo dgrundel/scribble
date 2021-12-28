@@ -1,4 +1,5 @@
 <script lang="ts">
+    import debounce from 'lodash.debounce';
     import Tag from "tabler-icons-svelte/icons/Tag.svelte";
     import Check from "tabler-icons-svelte/icons/Check.svelte";
     import Star from "tabler-icons-svelte/icons/Star.svelte";
@@ -8,13 +9,15 @@
     import Quill from "quill";
     import Flyout from "./Flyout.svelte";
     import TextInput from "./TextInput.svelte";
-    import type { Note } from "./NoteStore";
-    import { createNote } from './NoteStore';
+    import type { Note } from "./Note";
+    import { createNote } from './Note';
 
     export let openMenu: () => void;
-    export let content: string = '';
     export let note: Note = createNote();
+    
+    const SAVE_DELAY = 3000;
 
+    let quill;
     let tags: string[] = [];
     
     // icon overrides
@@ -42,20 +45,24 @@
         "What is your proudest moment?",
     ];
 
-    let quill;
+    const onTextChange = (delta, oldDelta, source) => {
+        console.log(delta);
+    };
+
     onMount(() => { 
-        let container = document.getElementById('quill');
-        quill = new Quill(container, {
+        quill = new Quill(document.getElementById('quill'), {
             modules: {
                 toolbar: '.layout-toolbar',
             },
-            placeholder: placeholders[Math.floor(Math.random() * placeholders.length)],
+            placeholder: placeholders[ Math.floor(Math.random() * placeholders.length) ],
             theme: "snow"
         });
+
+        quill.on('text-change', debounce(onTextChange, SAVE_DELAY));
     })
 
-    $: if (quill && content) {
-        quill.insertText(0, content);
+    $: if (quill && note.body) {
+        quill.insertText(0, note.body);
     }
 
     let isStarred = false;
