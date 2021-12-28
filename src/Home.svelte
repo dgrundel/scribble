@@ -7,9 +7,12 @@
     import NoteListItem from "./NoteListItem.svelte";
     import SwipeActionRow from "./SwipeActionRow.svelte";
     import Icon from "./Icon.svelte";
-import { createNote } from "./Note";
+    import { createNote, getNoteStore, Note } from "./Note";
 
     export let openMenu: () => void;
+
+    let recents: Note[] = [];
+    getNoteStore().getNotes().then(notes => recents = notes);
 </script>
 
 <Layout {openMenu}>
@@ -20,9 +23,11 @@ import { createNote } from "./Note";
         </ListItem>
 
         <h2 class="pad">Recent Items</h2>
-        <NoteListItem icon={FileText} on:click={() => goToPage('editor', { note: createNote({ body: 'foo' })})}>
-            Foo
-        </NoteListItem>
+        {#each recents as note}
+            <NoteListItem icon={FileText} on:click={() => goToPage('editor', { note })}>
+                {note.title}
+            </NoteListItem>
+        {/each}
     </svelte:fragment>
 </Layout>
 

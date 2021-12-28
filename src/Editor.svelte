@@ -1,21 +1,34 @@
 <script lang="ts">
     import debounce from 'lodash.debounce';
+    import markdownIt from 'markdown-it';
+    import turndown from 'turndown';
     import Tag from "tabler-icons-svelte/icons/Tag.svelte";
     import Check from "tabler-icons-svelte/icons/Check.svelte";
     import Star from "tabler-icons-svelte/icons/Star.svelte";
     import Layout from "./Layout.svelte";
     import Icon from "./Icon.svelte";
-    import {  onMount } from 'svelte'
+    import { onMount, onDestroy } from 'svelte'
     import Quill from "quill";
     import Flyout from "./Flyout.svelte";
     import TextInput from "./TextInput.svelte";
-    import type { Note } from "./Note";
+    import { getNoteStore, Note } from "./Note";
     import { createNote } from './Note';
 
     export let openMenu: () => void;
     export let note: Note = createNote();
     
     const SAVE_DELAY = 3000;
+    const mdParser = markdownIt({ 
+        html: true,
+    });
+    const mdRenderer = new turndown({
+        headingStyle: 'atx',
+        bulletListMarker: '-',
+        codeBlockStyle: 'fenced',
+    });
+
+    const mdToHtml = (md: string): string => mdParser.render(md) + '\n';
+    const htmlToMd = (html: string): string => mdRenderer.turndown(html);
 
     let quill;
     let tags: string[] = [];
@@ -45,8 +58,24 @@
         "What is your proudest moment?",
     ];
 
+    const save = () => {
+        if (!quill) {
+            return;
+        }
+
+        const elem = quill.container.querySelector('.ql-editor');
+        const md = htmlToMd(elem.innerHTML);
+        note.body = md;
+
+        getNoteStore().saveNote(note);
+    };
+
     const onTextChange = (delta, oldDelta, source) => {
-        console.log(delta);
+        if (source !== 'user') {
+            return;
+        }
+
+        save();
     };
 
     onMount(() => { 
@@ -58,12 +87,15 @@
             theme: "snow"
         });
 
+        const html = mdToHtml(note.body);
+        quill.clipboard.dangerouslyPasteHTML(html);
+
         quill.on('text-change', debounce(onTextChange, SAVE_DELAY));
     })
 
-    $: if (quill && note.body) {
-        quill.insertText(0, note.body);
-    }
+    onDestroy(() => {
+        save();
+    });
 
     let isStarred = false;
 

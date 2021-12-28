@@ -8,7 +8,7 @@
 </script>
 
 <SwipeActionRow>
-    <div class="note-list-item-main clickable">
+    <div class="note-list-item-main clickable" on:click>
         <span class="note-list-item-icon">
             <Icon {icon}/>
         </span>
