@@ -1,6 +1,12 @@
 :root {
     --main-background-color: #222;
     --text-color: #fff;
+    --accent-color:  rgb(100, 255, 255);
+    --accent-color-muted:  rgb(69, 201, 201);
+
+    --text-color-hover: var(--accent-color);
+    --badge-color: var(--accent-color-muted);
+    --border-color: #484848;
 
     --display-font-family: 'VenrynSansMedium', serif;
     --monospace-font-family: 'InconsolataLGCMarkupRegular', monospace;

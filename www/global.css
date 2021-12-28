@@ -158,3 +158,11 @@ svg {
     stroke: var(--color);
     fill: var(--color);
 }
+
+.clickable {
+    cursor: pointer;
+}
+
+.clickable:hover {
+    color: var(--text-color-hover);
+}

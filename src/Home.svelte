@@ -4,8 +4,9 @@
     import FileText from "tabler-icons-svelte/icons/FileText.svelte";
     import Plus from "tabler-icons-svelte/icons/Plus.svelte";
     import { goToPage } from "./router";
-import NoteListItem from "./NoteListItem.svelte";
-import SwipeContainer from "./SwipeContainer.svelte";
+    import NoteListItem from "./NoteListItem.svelte";
+    import SwipeActionRow from "./SwipeActionRow.svelte";
+    import Icon from "./Icon.svelte";
 
     export let openMenu: () => void;
 </script>
@@ -18,15 +19,34 @@ import SwipeContainer from "./SwipeContainer.svelte";
         </ListItem>
 
         <h2 class="pad">Recent Items</h2>
-        <NoteListItem icon={FileText} onClick={() => goToPage('editor', { content: 'foo' })}>
+        <NoteListItem icon={FileText} on:click={() => goToPage('editor', { content: 'foo' })}>
             Foo
         </NoteListItem>
-        <NoteListItem icon={FileText} onClick={() => goToPage('editor', { content: 'bar' })}>
+        <NoteListItem icon={FileText} on:click={() => goToPage('editor', { content: 'bar' })}>
             Bar
         </NoteListItem>
-        <NoteListItem icon={FileText} onClick={() => goToPage('editor', { content: 'baz' })}>
+        <NoteListItem icon={FileText} on:click={() => goToPage('editor', { content: 'baz' })}>
             Baz
         </NoteListItem>
+
+        <h2 class="pad">Test</h2>
+        <SwipeActionRow>
+            <svelte:fragment slot="left">
+                hello left!
+                <button><Icon icon={FileText}/></button>
+            </svelte:fragment>
+
+            hello main!
+            
+            <svelte:fragment slot="right">
+                hello right!
+                <button><Icon icon={FileText}/></button>
+                <button><Icon icon={FileText}/></button>
+                <button><Icon icon={FileText}/></button>
+                <button><Icon icon={FileText}/></button>
+                <button><Icon icon={FileText}/></button>
+            </svelte:fragment>
+        </SwipeActionRow>
     </svelte:fragment>
 </Layout>
 

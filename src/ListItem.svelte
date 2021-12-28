@@ -23,11 +23,7 @@
         --svg-size: 1em;
 
         padding: var(--padding);
-        border-bottom: 1px solid rgba(255,255,255,0.2);
-    }
-
-    .list-item.clickable {
-        cursor: pointer;
+        border-bottom: 1px solid var(--border-color);
     }
 
     .list-item-badge {

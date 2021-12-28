@@ -1,11 +1,12 @@
 <script lang="ts">
-    type Handler = ((distance: number) => void) | undefined;
+    type Handler = (() => void) | undefined;
     
-    export let onLeft: Handler = undefined; 
-    export let onRight: Handler = undefined; 
-    export let threshold = 150;
+    export let onLeftSwipe: Handler = () => {}; 
+    export let onRightSwipe: Handler = () => {}; 
+    export let swipeThreshold = 150;
+    export let hoverThreshold = 24;
 
-    let startX, endX;
+    let elem, startX, endX;
 
     const touchstart = (e: TouchEvent) => {
         startX = e.changedTouches[0].screenX;
@@ -14,12 +15,22 @@
         endX = e.changedTouches[0].screenX;
         const distance = Math.abs(endX - startX);
 
-        if (distance > threshold) {
-            endX < startX ? onLeft(distance) : onRight(distance);
+        if (distance > swipeThreshold) {
+            endX < startX ? onLeftSwipe() : onRightSwipe();
+        }
+    };
+    const mousemove = (e: MouseEvent) => {
+        const { left, right } = elem.getBoundingClientRect();
+        const isLeftHover = Math.abs(e.screenX - left) < hoverThreshold;
+        const isRightHover = Math.abs(e.screenX - right) < hoverThreshold;
+        if (isLeftHover) {
+            onRightSwipe();
+        } else if (isRightHover) {
+            onLeftSwipe();
         }
     };
 </script>
 
-<div on:touchstart={touchstart} on:touchend={touchend}>
+<div bind:this={elem} on:touchstart={touchstart} on:touchend={touchend} on:mousemove={mousemove}>
     <slot/>
 </div>
