@@ -9,6 +9,20 @@ export interface Note {
     tags?: string[];
 }
 
+export const createNote = (props?: Partial<Note>): Note => {
+    const now = new Date();
+    const created = +now;
+    const title = now.toISOString();
+    const body = `# ${title}`;
+    return {
+        created,
+        updated: created,
+        title,
+        body,
+        ...(props ? props : {}),
+    };
+};
+
 export interface NoteStore {
     getNotes: (tag?: string) => Promise<Note[]>;
     getTags: () => Promise<string[]>;
@@ -89,4 +103,6 @@ namespace LocalStorageNoteStore {
     };
 }
 
-export const getStore = () => new LocalStorageNoteStore();
+const store = new LocalStorageNoteStore();
+
+export const getNoteStore = (): NoteStore => store;
