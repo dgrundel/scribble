@@ -28,25 +28,6 @@
         <NoteListItem icon={FileText} on:click={() => goToPage('editor', { content: 'baz' })}>
             Baz
         </NoteListItem>
-
-        <h2 class="pad">Test</h2>
-        <SwipeActionRow>
-            <svelte:fragment slot="left">
-                hello left!
-                <button><Icon icon={FileText}/></button>
-            </svelte:fragment>
-
-            hello main!
-            
-            <svelte:fragment slot="right">
-                hello right!
-                <button><Icon icon={FileText}/></button>
-                <button><Icon icon={FileText}/></button>
-                <button><Icon icon={FileText}/></button>
-                <button><Icon icon={FileText}/></button>
-                <button><Icon icon={FileText}/></button>
-            </svelte:fragment>
-        </SwipeActionRow>
     </svelte:fragment>
 </Layout>
 
