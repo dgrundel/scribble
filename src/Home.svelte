@@ -5,14 +5,17 @@
     import Plus from "tabler-icons-svelte/icons/Plus.svelte";
     import { goToPage } from "./router";
     import NoteListItem from "./NoteListItem.svelte";
-    import SwipeActionRow from "./SwipeActionRow.svelte";
-    import Icon from "./Icon.svelte";
-    import { createNote, getNoteStore, Note } from "./Note";
+    import { getNoteStore, Note } from "./Note";
+import Spinner from "./Spinner.svelte";
 
     export let openMenu: () => void;
 
     let recents: Note[] = [];
-    getNoteStore().getNotes().then(notes => recents = notes);
+    let recentsLoaded = false;
+
+    getNoteStore().getNotes()
+        .then(notes => recents = notes)
+        .then(() => recentsLoaded = true);
 </script>
 
 <Layout {openMenu}>
@@ -23,11 +26,16 @@
         </ListItem>
 
         <h2 class="pad">Recent Items</h2>
-        {#each recents as note}
-            <NoteListItem icon={FileText} on:click={() => goToPage('editor', { note })}>
-                {note.title}
-            </NoteListItem>
-        {/each}
+        {#if (recentsLoaded)}
+            {#each recents as note}
+                <NoteListItem icon={FileText} on:click={() => goToPage('editor', { note })}>
+                    {note.title}
+                </NoteListItem>
+            {/each}
+        {:else}
+            <Spinner/>
+        {/if}
+        
     </svelte:fragment>
 </Layout>
 

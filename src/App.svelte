@@ -22,6 +22,7 @@
         document.addEventListener("deviceready", () => ready = true, false);
     } else {
         ready = true;
+        // setTimeout(() => ready = true, Math.floor(Math.random() * 3000));
     }
 </script>
 
@@ -34,7 +35,7 @@
         
         <svelte:component this={page} {...props} openMenu={() => drawerOpen = true} />
     {:else}
-        <Spinner/>
+        <Spinner fullscreen/>
     {/if}
 </main>
 
