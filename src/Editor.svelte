@@ -8,9 +8,12 @@
     import Quill from "quill";
     import Flyout from "./Flyout.svelte";
     import TextInput from "./TextInput.svelte";
+    import type { Note } from "./NoteStore";
+    import { createNote } from './NoteStore';
 
     export let openMenu: () => void;
     export let content: string = '';
+    export let note: Note = createNote();
 
     let tags: string[] = [];
     
