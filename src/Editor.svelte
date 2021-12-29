@@ -30,48 +30,37 @@
         save();
     };
 
-    let tags: { [name: string]: boolean } = note.tags 
-        ? note.tags.reduce((map, t) => {
-            map[t] = true;
-            return map;
-        }, {})
-        : {};
-
-    getNoteStore().getTags()
-        .then(all => all
-            .filter(t => !tags.hasOwnProperty(t))
-            .forEach(t => tags[t] = false));
-
-    // const updateBodyFromHtml = throttle((html) => {
-    //     const md = htmlToMd(html);
-    //     note.body = md;
-
-    //     save();
-    // }, SAVE_THROTTLE, {
-    //     leading: true,
-    //     trailing: false,
-    // });
-
-    let tagButtonActive = false;
-    let newTag = '';
-
-    const updateNoteTags = () => {
-        note.tags = Object.keys(tags).filter(t => tags[t]);
+    const toggleStar = () => {
+        note.starred = !note.starred;
         save();
+    };
+
+    // let tags: { [name: string]: boolean } = {};
+    // getNoteStore().getTags()
+    // .then(others => others
+    //     .filter(t => !tags.hasOwnProperty(t))
+    //     .forEach(t => tags[t] = false));
+    // $: if (note.tags) {
+    //     note.tags.forEach(t => tags[t] = true);
+    // }
+
+    let showTagFlyout = false;
+    let newTag = '';
+    let otherTags: string[] = [];
+    
+    $: {
+        const selected = new Set(note.tags || []);
+        getNoteStore().getTags().then(all => {
+            otherTags = all.filter(t => !selected.has(t));
+        });
     }
 
-    const addTag = (t: string) => {
-        tags[t] = true;
-        updateNoteTags();
-    };
-
-    const removeTag = (t: string) => {
-        tags[t] = false;
-        updateNoteTags();
-    };
-    
-    const addTagFromInput = () => {
-        addTag(newTag);
+    const createTag = () => {
+        const set = new Set(note.tags || []);
+        set.add(newTag);
+        note.tags = [...set];
+        save();
+        
         newTag = '';
     };
 
@@ -82,17 +71,19 @@
 
     const onTagKeyup = (e: KeyboardEvent) => {
         if (e.key === 'Enter' || e.keyCode === 13) {
-            addTagFromInput();
+            createTag();
         }
     };
 
     const onTagCheckboxChange = (tag: string, e: Event) => {
         const target = e.target as HTMLInputElement;
-        target.checked ? addTag(tag) : removeTag(tag);
-    };
-
-    const toggleStar = () => {
-        note.starred = !note.starred;
+        const set = new Set(note.tags || []);
+        if (target.checked) {
+            set.add(tag);
+        } else {
+            set.delete(tag);
+        }
+        note.tags = [...set];
         save();
     };
 </script>
@@ -102,20 +93,28 @@
         <span class="divider"></span>
 
         <button class={note.starred ? 'active filled-star' : ''} on:click={toggleStar}><Icon icon={Star}/></button>
-        <Flyout onShow={() => tagButtonActive = true} onHide={() => tagButtonActive = false}>
+
+        <Flyout onShow={() => showTagFlyout = true} onHide={() => showTagFlyout = false}>
             <svelte:fragment slot="target">
-                <button class={tagButtonActive ? 'active' : ''}><Icon icon={Tag}/></button>
+                <button class={showTagFlyout ? 'active' : ''}><Icon icon={Tag}/></button>
             </svelte:fragment>
             <svelte:fragment slot="content">
-                {#each Object.keys(tags) as tag}
+                {#if (note.tags)}
+                    {#each note.tags as tag}
+                        <label>
+                            <input type="checkbox" checked on:change={e => onTagCheckboxChange(tag, e)}> {tag}
+                        </label>
+                    {/each}
+                {/if}
+                {#each otherTags as tag}
                     <label>
-                        <input type="checkbox" checked={tags[tag]} on:change={e => onTagCheckboxChange(tag, e)}> {tag}
+                        <input type="checkbox" on:change={e => onTagCheckboxChange(tag, e)}> {tag}
                     </label>
                 {/each}
                                 
                 <TextInput label="New Tag" value={newTag} on:input={onTagInput} on:keyup={onTagKeyup}>
                     <svelte:fragment slot="post">
-                        <button on:click={addTagFromInput}><Icon icon={Check}/></button>
+                        <button on:click={createTag}><Icon icon={Check}/></button>
                     </svelte:fragment>
                 </TextInput>
             </svelte:fragment>
