@@ -28,13 +28,11 @@ export const parseNoteTitle = (body?: string): string => {
 export const createNote = (props?: Partial<Note>): Note => {
     const now = new Date();
     const created = +now;
-    const body = `# ${now.toLocaleString()}`;
-    const title = parseNoteTitle(body);
+    const title = now.toLocaleString();
     return {
         created,
         updated: created,
         title,
-        body,
         ...props,
     };
 };

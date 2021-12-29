@@ -1,35 +1,35 @@
 <script lang="ts">
-    import throttle from 'lodash.throttle';
-    import markdownIt from 'markdown-it';
-    import turndown from 'turndown';
     import Tag from "tabler-icons-svelte/icons/Tag.svelte";
     import Check from "tabler-icons-svelte/icons/Check.svelte";
     import Star from "tabler-icons-svelte/icons/Star.svelte";
     import Layout from "./Layout.svelte";
     import Icon from "./Icon.svelte";
-    import { onMount, onDestroy, beforeUpdate } from 'svelte'
+    import QuillMarkdown from "./QuillMarkdown.svelte";
     import Quill from "quill";
     import Flyout from "./Flyout.svelte";
     import TextInput from "./TextInput.svelte";
     import { getNoteStore, Note } from "./Note";
+    
+    // toolbar icon overrides
+    var icons = Quill.import('ui/icons');
+    icons['header']['1'] = 'H1';
+    icons['header']['2'] = 'H2';
+    icons['header']['3'] = 'H3';
+    icons['header']['4'] = 'H4';
+    icons['header']['5'] = 'H5';
 
     export let openMenu: () => void;
     export let note: Note;
 
-    const SAVE_THROTTLE = 2000;
-    const mdParser = markdownIt({ 
-        html: true,
-    });
-    const mdRenderer = new turndown({
-        headingStyle: 'atx',
-        bulletListMarker: '-',
-        codeBlockStyle: 'fenced',
-    });
+    const save = () => {
+        getNoteStore().saveNote(note);
+    };
 
-    const mdToHtml = (md: string): string => mdParser.render(md) + '\n';
-    const htmlToMd = (html: string): string => mdRenderer.turndown(html);
+    const onMarkdownChange = (md: string) => {
+        note.body = md;
+        save();
+    };
 
-    let quill;
     let tags: { [name: string]: boolean } = note.tags 
         ? note.tags.reduce((map, t) => {
             map[t] = true;
@@ -41,80 +41,16 @@
         .then(all => all
             .filter(t => !tags.hasOwnProperty(t))
             .forEach(t => tags[t] = false));
-    
-    // icon overrides
-    var icons = Quill.import('ui/icons');
-    icons['header']['1'] = 'H1';
-    icons['header']['2'] = 'H2';
-    icons['header']['3'] = 'H3';
-    icons['header']['4'] = 'H4';
-    icons['header']['5'] = 'H5';
 
-    const placeholders = [
-        "What's on your mind?",
-        "What do you want to accomplish today?",
-        "What process can you fix or improve?",
-        "What do you need help with?",
-        "What's your top priority right now?",
-        "What could you have done better in the last week?",
-        "What inspires you?",
-        "What is the most meaningful part of your life?",
-        "What's holding you back?",
-        "If you were famous, what would you be famous for?",
-        "When is the last time you were out of your comfort zone?",
-        "Who do you admire?",
-        "What's something you're really good at?",
-        "What is your proudest moment?",
-    ];
+    // const updateBodyFromHtml = throttle((html) => {
+    //     const md = htmlToMd(html);
+    //     note.body = md;
 
-    const save = () => {
-        getNoteStore().saveNote(note);
-    };
-
-    const updateBodyFromHtml = throttle((html) => {
-        const md = htmlToMd(html);
-        note.body = md;
-
-        save();
-    }, SAVE_THROTTLE, {
-        leading: true,
-        trailing: false,
-    });
-
-    onMount(() => { 
-        quill = new Quill(document.getElementById('quill'), {
-            modules: {
-                toolbar: '.layout-toolbar',
-            },
-            placeholder: placeholders[ Math.floor(Math.random() * placeholders.length) ],
-            theme: "snow"
-        });
-
-        // put note content into editor
-        const html = mdToHtml(note.body);
-        quill.clipboard.dangerouslyPasteHTML(html);
-
-        // add listener for change events
-        quill.on('text-change', (delta, oldDelta, source) => {
-            if (source !== 'user') {
-                return;
-            }
-
-            const elem = quill.container.querySelector('.ql-editor');
-            const html = elem.innerHTML;
-            updateBodyFromHtml(html);
-        });
-    });
-
-    // beforeUpdate(() => {
-    //     if (quill) {
-    //         // put note content into editor
-    //         const html = mdToHtml(note.body);
-    //         quill.clipboard.dangerouslyPasteHTML(html);
-    //     }
+    //     save();
+    // }, SAVE_THROTTLE, {
+    //     leading: true,
+    //     trailing: false,
     // });
-
-    onDestroy(() => updateBodyFromHtml.cancel())
 
     let tagButtonActive = false;
     let newTag = '';
@@ -216,6 +152,6 @@
         <button class="ql-header" value="5"></button>
     </svelte:fragment>
     <svelte:fragment slot="content">
-        <div id="quill"></div>
+        <QuillMarkdown markdown={note.body || ''} onChange={onMarkdownChange}/>
     </svelte:fragment>
 </Layout>
