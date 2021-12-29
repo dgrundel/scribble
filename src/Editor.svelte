@@ -58,7 +58,7 @@
         "What is your proudest moment?",
     ];
 
-    const save = () => {
+    const save = debounce(() => {
         if (!quill) {
             return;
         }
@@ -68,7 +68,7 @@
         note.body = md;
 
         getNoteStore().saveNote(note);
-    };
+    }, 100);
 
     const onTextChange = (delta, oldDelta, source) => {
         if (source !== 'user') {
@@ -87,17 +87,17 @@
             theme: "snow"
         });
 
+        // put note content into editor
         const html = mdToHtml(note.body);
         quill.clipboard.dangerouslyPasteHTML(html);
 
+        // add listener for change events
         quill.on('text-change', debounce(onTextChange, SAVE_DELAY));
     })
 
     onDestroy(() => {
         save();
     });
-
-    let isStarred = false;
 
     let tagButtonActive = false;
     let newTag = '';
@@ -117,13 +117,18 @@
             addTagFromInput();
         }
     };
+
+    const toggleStar = () => {
+        note.starred = !note.starred;
+        save();
+    };
 </script>
 
 <Layout {openMenu}>
     <svelte:fragment slot="toolbar">
         <span class="divider"></span>
 
-        <button class={isStarred ? 'active filled-star' : ''} on:click={() => isStarred = !isStarred}><Icon icon={Star}/></button>
+        <button class={note.starred ? 'active filled-star' : ''} on:click={toggleStar}><Icon icon={Star}/></button>
         <Flyout onShow={() => tagButtonActive = true} onHide={() => tagButtonActive = false}>
             <svelte:fragment slot="target">
                 <button class={tagButtonActive ? 'active' : ''}><Icon icon={Tag}/></button>

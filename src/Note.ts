@@ -7,6 +7,7 @@ export interface Note {
     id?: string;
     body?: string;
     tags?: string[];
+    starred?: boolean;
 }
 
 const NOTE_TITLE_MAX_CHARS = 180;
@@ -34,12 +35,16 @@ export const createNote = (props?: Partial<Note>): Note => {
         updated: created,
         title,
         body,
-        ...(props ? props : {}),
+        ...props,
     };
 };
 
+export interface NoteFilters {
+    tags?: string[];
+    starred?: boolean;
+}
 export interface NoteStore {
-    getNotes: (tag?: string) => Promise<Note[]>;
+    getNotes: (filters?: NoteFilters) => Promise<Note[]>;
     getTags: () => Promise<string[]>;
     saveNote: (note: Note) => Promise<Note>;
     deleteNote: (id: string) => Promise<void>;
@@ -51,16 +56,23 @@ class LocalStorageNoteStore implements NoteStore {
         return json ? JSON.parse(json) : {};
     }
 
-    getNotes(tag?: string): Promise<Note[]> {
+    getNotes(filters?: NoteFilters): Promise<Note[]> {
         return new Promise(resolve => {
             const store = this.getStore();
-            const notes = Object.values(store);
-            const filtered = tag
-                ? notes.filter(n => n.tags && n.tags.includes(tag))
-                : notes;
+            let notes = Object.values(store);
+            
+            if (filters) {
+                if (filters.tags) {
+                    notes = notes.filter(n => n.tags && filters.tags.every(t => n.tags.includes(t)));
+                }
+
+                if (typeof filters.starred === 'boolean') {
+                    notes = notes.filter(n => filters.starred === !!n.starred);
+                }
+            }
             
             // add artifical delay to simulate network latency
-            setTimeout(() => resolve(filtered), Math.floor(Math.random() * 3000));
+            setTimeout(() => resolve(notes), Math.floor(Math.random() * 3000));
         });
     }
 
