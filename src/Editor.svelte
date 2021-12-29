@@ -1,5 +1,5 @@
 <script lang="ts">
-    import debounce from 'lodash.debounce';
+    import throttle from 'lodash.throttle';
     import markdownIt from 'markdown-it';
     import turndown from 'turndown';
     import Tag from "tabler-icons-svelte/icons/Tag.svelte";
@@ -7,17 +7,16 @@
     import Star from "tabler-icons-svelte/icons/Star.svelte";
     import Layout from "./Layout.svelte";
     import Icon from "./Icon.svelte";
-    import { onMount, onDestroy } from 'svelte'
+    import { onMount, onDestroy, beforeUpdate } from 'svelte'
     import Quill from "quill";
     import Flyout from "./Flyout.svelte";
     import TextInput from "./TextInput.svelte";
     import { getNoteStore, Note } from "./Note";
-    import { createNote } from './Note';
 
     export let openMenu: () => void;
-    export let note: Note = createNote();
-    
-    const SAVE_DELAY = 3000;
+    export let note: Note;
+
+    const SAVE_THROTTLE = 2000;
     const mdParser = markdownIt({ 
         html: true,
     });
@@ -31,7 +30,17 @@
     const htmlToMd = (html: string): string => mdRenderer.turndown(html);
 
     let quill;
-    let tags: string[] = [];
+    let tags: { [name: string]: boolean } = note.tags 
+        ? note.tags.reduce((map, t) => {
+            map[t] = true;
+            return map;
+        }, {})
+        : {};
+
+    getNoteStore().getTags()
+        .then(all => all
+            .filter(t => !tags.hasOwnProperty(t))
+            .forEach(t => tags[t] = false));
     
     // icon overrides
     var icons = Quill.import('ui/icons');
@@ -58,25 +67,19 @@
         "What is your proudest moment?",
     ];
 
-    const save = debounce(() => {
-        if (!quill) {
-            return;
-        }
+    const save = () => {
+        getNoteStore().saveNote(note);
+    };
 
-        const elem = quill.container.querySelector('.ql-editor');
-        const md = htmlToMd(elem.innerHTML);
+    const updateBodyFromHtml = throttle((html) => {
+        const md = htmlToMd(html);
         note.body = md;
 
-        getNoteStore().saveNote(note);
-    }, 100);
-
-    const onTextChange = (delta, oldDelta, source) => {
-        if (source !== 'user') {
-            return;
-        }
-
         save();
-    };
+    }, SAVE_THROTTLE, {
+        leading: true,
+        trailing: false,
+    });
 
     onMount(() => { 
         quill = new Quill(document.getElementById('quill'), {
@@ -92,18 +95,47 @@
         quill.clipboard.dangerouslyPasteHTML(html);
 
         // add listener for change events
-        quill.on('text-change', debounce(onTextChange, SAVE_DELAY));
-    })
+        quill.on('text-change', (delta, oldDelta, source) => {
+            if (source !== 'user') {
+                return;
+            }
 
-    onDestroy(() => {
-        save();
+            const elem = quill.container.querySelector('.ql-editor');
+            const html = elem.innerHTML;
+            updateBodyFromHtml(html);
+        });
     });
+
+    // beforeUpdate(() => {
+    //     if (quill) {
+    //         // put note content into editor
+    //         const html = mdToHtml(note.body);
+    //         quill.clipboard.dangerouslyPasteHTML(html);
+    //     }
+    // });
+
+    onDestroy(() => updateBodyFromHtml.cancel())
 
     let tagButtonActive = false;
     let newTag = '';
+
+    const updateNoteTags = () => {
+        note.tags = Object.keys(tags).filter(t => tags[t]);
+        save();
+    }
+
+    const addTag = (t: string) => {
+        tags[t] = true;
+        updateNoteTags();
+    };
+
+    const removeTag = (t: string) => {
+        tags[t] = false;
+        updateNoteTags();
+    };
     
     const addTagFromInput = () => {
-        tags = [...tags, newTag];
+        addTag(newTag);
         newTag = '';
     };
 
@@ -116,6 +148,11 @@
         if (e.key === 'Enter' || e.keyCode === 13) {
             addTagFromInput();
         }
+    };
+
+    const onTagCheckboxChange = (tag: string, e: Event) => {
+        const target = e.target as HTMLInputElement;
+        target.checked ? addTag(tag) : removeTag(tag);
     };
 
     const toggleStar = () => {
@@ -134,9 +171,9 @@
                 <button class={tagButtonActive ? 'active' : ''}><Icon icon={Tag}/></button>
             </svelte:fragment>
             <svelte:fragment slot="content">
-                {#each tags as tag}
+                {#each Object.keys(tags) as tag}
                     <label>
-                        <input type="checkbox" checked> {tag}
+                        <input type="checkbox" checked={tags[tag]} on:change={e => onTagCheckboxChange(tag, e)}> {tag}
                     </label>
                 {/each}
                                 

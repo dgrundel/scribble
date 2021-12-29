@@ -5,7 +5,7 @@
     import Plus from "tabler-icons-svelte/icons/Plus.svelte";
     import { goToPage } from "./router";
     import NoteListItem from "./NoteListItem.svelte";
-    import { getNoteStore, Note } from "./Note";
+    import { createNote, getNoteStore, Note } from "./Note";
 import Spinner from "./Spinner.svelte";
 
     export let openMenu: () => void;
@@ -21,7 +21,7 @@ import Spinner from "./Spinner.svelte";
 <Layout {openMenu}>
     <svelte:fragment slot="content">
         <h1 class="pad">Hello there!</h1>
-        <ListItem icon={Plus} onClick={() => goToPage('editor')}>
+        <ListItem icon={Plus} onClick={() => goToPage('editor', { note: createNote() })}>
             Create New
         </ListItem>
 

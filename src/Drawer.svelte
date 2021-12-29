@@ -49,7 +49,7 @@ Mrs. Darling was married in white, and at first she kept the books perfectly, al
             Home
         </ListItem>
         
-        <ListItem icon={Plus} onClick={() => goToPage('editor')}>
+        <ListItem icon={Plus} onClick={() => goToPage('editor', { note: createNote() })}>
             New
         </ListItem>
 
