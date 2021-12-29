@@ -35,15 +35,6 @@
         save();
     };
 
-    // let tags: { [name: string]: boolean } = {};
-    // getNoteStore().getTags()
-    // .then(others => others
-    //     .filter(t => !tags.hasOwnProperty(t))
-    //     .forEach(t => tags[t] = false));
-    // $: if (note.tags) {
-    //     note.tags.forEach(t => tags[t] = true);
-    // }
-
     let showTagFlyout = false;
     let newTag = '';
     let otherTags: string[] = [];
