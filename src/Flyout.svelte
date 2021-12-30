@@ -1,10 +1,13 @@
 <script lang="ts">
+    import { afterUpdate } from "svelte";
+
     export let onShow: (() => void) | undefined = undefined;
     export let onHide: (() => void) | undefined = undefined;
     let timeout;
     let target;
     let flyout;
     let content;
+    let visible = false;
 
     const updatePosition = () => {
         const { scrollHeight: height, offsetWidth: width } = target;
@@ -22,19 +25,19 @@
     };
 
     const show = () => {
-        flyout.style.display = 'block';
-        updatePosition();
+        visible = true;
+        // updatePosition();
         onShow && onShow();
     };
 
     const hide = () => {
-        flyout.style.display = 'none';
+        visible = false;
         onHide && onHide();
     };
 
-    const click = () => {
+    const toggle = () => {
         // toggle display
-        flyout.style.display === 'none' ? show() : hide();
+        visible ? hide() : show();
     };
 
     const mouseenter = () => {
@@ -48,13 +51,15 @@
     const mouseleave = () => {
         timeout = setTimeout(hide, 1000);
     };
+
+    afterUpdate(() => updatePosition());
 </script>
 
-<span class="flyout-target" bind:this={target} on:mouseenter={mouseenter} on:mouseleave={mouseleave} on:click={click}>
+<span class="flyout-target" bind:this={target} on:mouseenter={mouseenter} on:mouseleave={mouseleave} on:click={toggle}>
     <slot name="target"></slot>
 </span>
 
-<div class="flyout" bind:this={flyout} on:mouseenter={mouseenter} on:mouseleave={mouseleave} style="display: none;">
+<div class={`flyout ${visible ? 'visible' : ''}`} bind:this={flyout} on:mouseenter={mouseenter} on:mouseleave={mouseleave}>
     <div class="flyout-content" bind:this={content}>
         <slot name="content"></slot>
     </div>
@@ -67,11 +72,16 @@
     .flyout {
         --flyout-color: #111;
 
+        display: none;
         z-index: 999;
         position: absolute;
         left: 0;
         top: 0;
         max-width: 100vw;
+    }
+
+    .flyout.visible {
+        display: block;
     }
 
     .flyout::before {
