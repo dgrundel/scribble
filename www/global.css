@@ -132,6 +132,15 @@ pre, pre.ql-syntax {
     cursor: pointer;
 }
 
+.layout-toolbar button[data-prefix]::before {
+    content: attr(data-prefix);
+    display: inline-block;
+    vertical-align: top;
+    line-height: var(--size);
+    height: var(--size);
+    padding: 0 var(--pad) 0 0;
+}
+
 .layout-toolbar button.active {
     background-color: rgb(107, 107, 107) !important;
 }
@@ -147,7 +156,12 @@ pre, pre.ql-syntax {
 }
 
 .layout-toolbar .toolbar-text {
+    --svg-size: 1em;
+
+    white-space: nowrap;
     padding: 0 var(--spacing);
+    text-transform: uppercase;
+    font-size: 0.85em;
 }
 
 svg {
