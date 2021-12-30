@@ -14,7 +14,7 @@
 
         const flyoutLeft = left + (width / 2) + scrollX - (flyoutWidth / 2);
         //offset the little triangle
-        const contentLeft = flyoutLeft < 0 ? Math.abs(flyoutLeft) :0;
+        const contentLeft = flyoutLeft < 0 ? Math.abs(flyoutLeft) : 0;
 
         flyout.style.top = (top + height + scrollY) + 'px';
         flyout.style.left = flyoutLeft + 'px';
@@ -23,6 +23,7 @@
 
     const show = () => {
         flyout.style.display = 'block';
+        updatePosition();
         onShow && onShow();
     };
 
@@ -42,7 +43,6 @@
         }
 
         show();
-        updatePosition();
     };
 
     const mouseleave = () => {
@@ -54,7 +54,7 @@
     <slot name="target"></slot>
 </span>
 
-<div class="flyout" bind:this={flyout} on:mouseenter={mouseenter} on:mouseleave={mouseleave}>
+<div class="flyout" bind:this={flyout} on:mouseenter={mouseenter} on:mouseleave={mouseleave} style="display: none;">
     <div class="flyout-content" bind:this={content}>
         <slot name="content"></slot>
     </div>
@@ -67,7 +67,6 @@
     .flyout {
         --flyout-color: #111;
 
-        display: none;
         z-index: 999;
         position: absolute;
         left: 0;
