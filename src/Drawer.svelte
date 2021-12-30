@@ -63,7 +63,7 @@ Mrs. Darling was married in white, and at first she kept the books perfectly, al
         <ListItem
             icon={Star}
             badge={all.length ? all.length.toString() : ''}
-            onClick={() => goToPage('noteList')}>
+            onClick={() => goToPage('noteList', { filters: { starred: true }})}>
             Starred
         </ListItem>
 

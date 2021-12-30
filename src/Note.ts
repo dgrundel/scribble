@@ -37,10 +37,18 @@ export const createNote = (props?: Partial<Note>): Note => {
     };
 };
 
+export interface NoteSort {
+    col: keyof Note;
+    dir?: 'asc' | 'desc';
+}
+
 export interface NoteFilters {
     tags?: string[];
     starred?: boolean;
+    sort?: NoteSort;
+    limit?: number;
 }
+
 export interface NoteStore {
     getNotes: (filters?: NoteFilters) => Promise<Note[]>;
     getTags: () => Promise<string[]>;
@@ -66,6 +74,31 @@ class LocalStorageNoteStore implements NoteStore {
 
                 if (typeof filters.starred === 'boolean') {
                     notes = notes.filter(n => filters.starred === !!n.starred);
+                }
+
+                if (filters.sort) {
+                    notes = notes.sort((nA, nB) => {
+                        let a = nA[filters.sort.col];
+                        let b = nB[filters.sort.col];
+                        if (typeof a === 'string') {
+                            a = a.toLowerCase();
+                        }
+                        if (typeof b === 'string') {
+                            b = b.toLowerCase();
+                        }
+                        if (a === b) {
+                            return 0;
+                        };
+                        if (filters.sort.dir === 'asc') {
+                            return a > b ? -1 : 1;
+                        } else {
+                            return a < b ? -1 : 1;
+                        }
+                    });
+                }
+
+                if (filters.limit > 0 && notes.length > filters.limit) {
+                    notes = notes.slice(0, filters.limit);
                 }
             }
             

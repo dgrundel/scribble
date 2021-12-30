@@ -1,26 +1,38 @@
 <script lang="ts">
-import Layout from "./Layout.svelte";
-import ListItem from "./ListItem.svelte";
+    import Layout from "./Layout.svelte";
+    import FileText from "tabler-icons-svelte/icons/FileText.svelte";
+    import NoteListItem from "./NoteListItem.svelte";
+    import { goToPage } from "./router";
+    import { getNoteStore, Note, NoteFilters } from "./Note";
+    import Spinner from "./Spinner.svelte";
+
+    const DEFAULT_FILTERS: NoteFilters = { sort: { col: 'title' } };
 
     export let openMenu: () => void;
-    interface Note {
-        title: string;
+    export let filters: NoteFilters = {};
+
+    let notes: Note[] = [];
+    let loaded;
+
+    $: {
+        loaded = false;
+        getNoteStore().getNotes({ ...DEFAULT_FILTERS, ...filters, })
+            .then(n => notes = n)
+            .then(() => loaded = true);
     }
-    let notes: Note[] = [
-        {
-            title: 'Hello',
-        },{
-            title: 'World',
-        },
-    ];
 </script>
 
 <Layout {openMenu}>
     <svelte:fragment slot="content">
-        {#each notes as note}
-            <ListItem>
-                {note.title}
-            </ListItem>
-        {/each}
+        {#if loaded}
+            {#each notes as note}
+                <NoteListItem icon={FileText} on:click={() => goToPage('editor', { note })}>
+                    {note.title}
+                </NoteListItem>
+            {/each}
+        {:else}
+            <Spinner/>
+        {/if}
+        
     </svelte:fragment>
 </Layout>

@@ -13,7 +13,7 @@ import Spinner from "./Spinner.svelte";
     let recents: Note[] = [];
     let recentsLoaded = false;
 
-    getNoteStore().getNotes()
+    getNoteStore().getNotes({ sort: { col: 'updated', dir: 'desc' }, limit: 5 })
         .then(notes => recents = notes)
         .then(() => recentsLoaded = true);
 </script>
