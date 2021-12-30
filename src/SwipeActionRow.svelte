@@ -3,11 +3,16 @@
 
     let left;
     let right;
-
     let offset = '0';
+    let timeout;
 
     const setOffset = (n: number) => {
+        if (timeout) {
+            clearTimeout(timeout);
+        }
+
         offset = Math.ceil(n) + 'px';
+        setTimeout(() => offset = '0', 3000);
     };
 
     /**
