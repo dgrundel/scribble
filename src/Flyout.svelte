@@ -103,7 +103,7 @@
         position: relative;
         top: 0;
         left: 0;
-        padding: .5rem .75rem;
+        padding: var(--small-padding);
         margin: 0 .75rem;
         border-radius: 0.3rem;
         background-color: var(--flyout-color);
