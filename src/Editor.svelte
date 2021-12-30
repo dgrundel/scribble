@@ -1,14 +1,11 @@
 <script lang="ts">
-    import Tag from "tabler-icons-svelte/icons/Tag.svelte";
-    import Check from "tabler-icons-svelte/icons/Check.svelte";
     import Star from "tabler-icons-svelte/icons/Star.svelte";
     import Layout from "./Layout.svelte";
     import Icon from "./Icon.svelte";
     import QuillMarkdown from "./QuillMarkdown.svelte";
     import Quill from "quill";
-    import Flyout from "./Flyout.svelte";
-    import TextInput from "./TextInput.svelte";
     import { getNoteStore, Note } from "./Note";
+    import TagEditorFlyout from "./TagEditorFlyout.svelte";
     
     // toolbar icon overrides
     var icons = Quill.import('ui/icons');
@@ -35,46 +32,8 @@
         save();
     };
 
-    let showTagFlyout = false;
-    let newTag = '';
-    let otherTags: string[] = [];
-    
-    $: {
-        const selected = new Set(note.tags || []);
-        getNoteStore().getTags().then(all => {
-            otherTags = all.filter(t => !selected.has(t));
-        });
-    }
-
-    const createTag = () => {
-        const set = new Set(note.tags || []);
-        set.add(newTag);
-        note.tags = [...set];
-        save();
-        
-        newTag = '';
-    };
-
-    const onTagInput = (e: InputEvent) => {
-        const t = e.target as HTMLInputElement;
-        newTag = t.value;
-    };
-
-    const onTagKeyup = (e: KeyboardEvent) => {
-        if (e.key === 'Enter' || e.keyCode === 13) {
-            createTag();
-        }
-    };
-
-    const onTagCheckboxChange = (tag: string, e: Event) => {
-        const target = e.target as HTMLInputElement;
-        const set = new Set(note.tags || []);
-        if (target.checked) {
-            set.add(tag);
-        } else {
-            set.delete(tag);
-        }
-        note.tags = [...set];
+    const onTagsChange = (tags: string[]) => {
+        note.tags = tags;
         save();
     };
 </script>
@@ -85,31 +44,7 @@
 
         <button class={note.starred ? 'active filled-star' : ''} on:click={toggleStar}><Icon icon={Star}/></button>
 
-        <Flyout onShow={() => showTagFlyout = true} onHide={() => showTagFlyout = false}>
-            <svelte:fragment slot="target">
-                <button class={showTagFlyout ? 'active' : ''}><Icon icon={Tag}/></button>
-            </svelte:fragment>
-            <svelte:fragment slot="content">
-                {#if (note.tags)}
-                    {#each note.tags as tag}
-                        <label>
-                            <input type="checkbox" checked on:change={e => onTagCheckboxChange(tag, e)}> {tag}
-                        </label>
-                    {/each}
-                {/if}
-                {#each otherTags as tag}
-                    <label>
-                        <input type="checkbox" on:change={e => onTagCheckboxChange(tag, e)}> {tag}
-                    </label>
-                {/each}
-                                
-                <TextInput label="New Tag" value={newTag} on:input={onTagInput} on:keyup={onTagKeyup}>
-                    <svelte:fragment slot="post">
-                        <button on:click={createTag}><Icon icon={Check}/></button>
-                    </svelte:fragment>
-                </TextInput>
-            </svelte:fragment>
-        </Flyout>
+        <TagEditorFlyout selected={new Set(note.tags)} onChange={onTagsChange}/>
     
         <span class="divider"></span>
 
