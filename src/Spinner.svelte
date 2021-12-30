@@ -3,11 +3,12 @@
     import Icon from "./Icon.svelte";
 
     export let fullscreen = false;
+    export let text = 'Just a moment...';
 </script>
 
 <div class={`spinner ${fullscreen ? 'fullscreen' : ''}`}>
     <i><Icon icon={CircleDashed}/></i>
-    Just a moment...
+    {text}
 </div>
 
 <style>

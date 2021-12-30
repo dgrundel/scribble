@@ -9,19 +9,17 @@
     import Tag from "tabler-icons-svelte/icons/Tag.svelte";
     import X from "tabler-icons-svelte/icons/X.svelte";
     import { goToPage } from "./router";
-    import { createNote } from "./Note";
+    import { createNote, getNoteStore } from "./Note";
+import Spinner from "./Spinner.svelte";
 
     export let isOpen: boolean = false;
     export let close: () => void;
 
-    let all = [];
-    let starred = [];
-    let tags = [
-        { name: 'foo', count: 5, },
-        { name: 'bar', count: 27, },
-        { name: 'baz', count: 3, },
-        { name: 'qux', count: 2293, },
-    ];
+    let tagsLoaded = false;
+    let tags: string[] = [];
+    getNoteStore().getTags()
+        .then(t => tags = t)
+        .then(() => tagsLoaded = true);
 
     let overlay;
     const overlayClick = e => {
@@ -29,16 +27,6 @@
             close();
         }
     };
-
-    const peterPan = `All children, except one, grow up. They soon know that they will grow up, and the way Wendy knew was this. One day when she was two years old she was playing in a garden, and she plucked another flower and ran with it to her mother. I suppose she must have looked rather delightful, for Mrs. Darling put her hand to her heart and cried, 'Oh, why can't you remain like this for ever!' This was all that passed between them on the subject, but henceforth Wendy knew that she must grow up. You always know after you are two. Two is the beginning of the end.
-
-Of course they lived at 14, and until Wendy came her mother was the chief one. She was a lovely lady, with a romantic mind and such a sweet mocking mouth. Her romantic mind was like the tiny boxes, one within the other, that come from the puzzling East, however many you discover there is always one more; and her sweet mocking mouth had one kiss on it that Wendy could never get, though there it was, perfectly conspicuous in the right-hand corner.
-
-The way Mr. Darling won her was this: the many gentlemen who had been boys when she was a girl discovered simultaneously that they loved her, and they all ran to her house to propose to her except Mr. Darling, who took a cab and nipped in first, and so he got her. He got all of her, except the innermost box and the kiss. He never knew about the box, and in time he gave up trying for the kiss. Wendy thought Napoleon could have got it, but I can picture him trying, and then going off in a passion, slamming the door.
-
-Mr. Darling used to boast to Wendy that her mother not only loved him but respected him. He was one of those deep ones who know about stocks and shares. Of course no one really knows, but he quite seemed to know, and he often said stocks were up and shares were down in a way that would have made any woman respect him.
-
-Mrs. Darling was married in white, and at first she kept the books perfectly, almost gleefully, as if it were a game, not so much as a brussels sprout was missing; but by and by whole cauliflowers dropped out, and instead of them there were pictures of babies without faces. She drew them when she should have been totting up. They were Mrs. Darling's guesses.`;
 </script>
 
 <div class="overlay {isOpen ? 'open' : ''}" bind:this={overlay} on:click={overlayClick}>
@@ -55,30 +43,29 @@ Mrs. Darling was married in white, and at first she kept the books perfectly, al
 
         <ListItem
             icon={Files}
-            badge={all.length ? all.length.toString() : ''}
             onClick={() => goToPage('noteList')}>
             All
         </ListItem>
 
         <ListItem
             icon={Star}
-            badge={all.length ? all.length.toString() : ''}
             onClick={() => goToPage('noteList', { filters: { starred: true }})}>
             Starred
         </ListItem>
 
-        {#each tags as tag}
-            <ListItem
-                icon={Tag}
-                badge={tag.count ? tag.count.toString() : ''}
-                onClick={() => goToPage('noteList')}>
-                {tag.name}
-            </ListItem>
-        {/each}
-
-        <ListItem icon={FileText} onClick={() => goToPage('editor', { note: createNote({ body: peterPan }) })}>
-            Peter and Wendy
-        </ListItem>
+        <div class="section" data-title="Tags">
+        {#if tagsLoaded}
+            {#each tags as tag}
+                <ListItem
+                    icon={Tag}
+                    onClick={() => goToPage('noteList', { filters: { tags: [tag] }})}>
+                    {tag}
+                </ListItem>
+            {/each}
+        {:else}
+            <Spinner text="Loading tags..."/>
+        {/if}
+        </div>
 
         <ListItem icon={Settings} onClick={() => goToPage('settings')}>
             Settings
@@ -156,5 +143,19 @@ Mrs. Darling was married in white, and at first she kept the books perfectly, al
         line-height: var(--size);
         text-align: center;
         font-size: var(--size);
+    }
+
+    .section {
+        border-left: var(--padding) solid var(--border-color);
+    }
+
+    .section::before {
+        display: block;
+        content: attr(data-title);
+        text-transform: uppercase;
+        font-size: 0.85em;
+        padding-left: var(--padding);
+        /* border-bottom: 1px solid var(--border-color); */
+        line-height: 2.2;
     }
 </style>

@@ -117,9 +117,17 @@ class LocalStorageNoteStore implements NoteStore {
                 }
                 return set;
             }, new Set());
-            
+
+            const list = [...tags].sort((s1, s2) => {
+                const a = s1.toLowerCase();
+                const b = s2.toLowerCase();
+                if (a === b) {
+                    return 0;
+                }
+                return a < b ? -1 : 1;
+            });
             // add artifical delay to simulate network latency
-            setTimeout(() => resolve([...tags]), Math.floor(Math.random() * 3000));
+            setTimeout(() => resolve(list), Math.floor(Math.random() * 3000));
         });
     }
 
