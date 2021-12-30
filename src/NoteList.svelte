@@ -5,13 +5,16 @@
     import Signature from "tabler-icons-svelte/icons/Signature.svelte";
     import SortAscending from "tabler-icons-svelte/icons/SortAscending.svelte";
     import SortDescending from "tabler-icons-svelte/icons/SortDescending.svelte";
+    import Star from "tabler-icons-svelte/icons/Star.svelte";
     import NoteListItem from "./NoteListItem.svelte";
     import { goToPage } from "./router";
     import { getNoteStore, Note, NoteFilters } from "./Note";
     import Spinner from "./Spinner.svelte";
 import Icon from "./Icon.svelte";
 
-    const DEFAULT_FILTERS: NoteFilters = { sort: { col: 'title' } };
+    const DEFAULT_FILTERS: NoteFilters = {
+        sort: { col: 'title' }
+    };
 
     export let openMenu: () => void;
     export let filters: NoteFilters = {};
@@ -34,12 +37,17 @@ import Icon from "./Icon.svelte";
 <Layout {openMenu}>
     <svelte:fragment slot="toolbar">
         <span class="divider"></span>
+        
+        <button aria-label="Starred" class={filters.starred === true ? 'active' : ''} 
+            on:click={() => filters.starred = filters.starred === true ? undefined : true }>
+            <Icon icon={Star}/>
+        </button>
 
-        <span class="toolbar-text">Sort: </span>
-        <button class={filters.sort.col === 'title' ? 'active' : ''} on:click={() => filters.sort.col = 'title'}>
+        <span class="toolbar-text">Sort by:</span>
+        <button aria-label="Title" class={filters.sort.col === 'title' ? 'active' : ''} on:click={() => filters.sort.col = 'title'}>
             <Icon icon={Signature}/>
         </button>
-        <button class={filters.sort.col === 'updated' ? 'active' : ''} on:click={() => filters.sort.col = 'updated'}>
+        <button aria-label="Updated" class={filters.sort.col === 'updated' ? 'active' : ''} on:click={() => filters.sort.col = 'updated'}>
             <Icon icon={Calendar}/>
         </button>
 
