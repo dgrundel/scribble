@@ -2,7 +2,6 @@
     import ListItem from "./ListItem.svelte";
     import Home from "tabler-icons-svelte/icons/Home.svelte";
     import Files from "tabler-icons-svelte/icons/Files.svelte";
-    import FileText from "tabler-icons-svelte/icons/FileText.svelte";
     import Plus from "tabler-icons-svelte/icons/Plus.svelte";
     import Star from "tabler-icons-svelte/icons/Star.svelte";
     import Settings from "tabler-icons-svelte/icons/Settings.svelte";
