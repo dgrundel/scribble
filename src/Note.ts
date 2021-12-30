@@ -89,7 +89,7 @@ class LocalStorageNoteStore implements NoteStore {
                         if (a === b) {
                             return 0;
                         };
-                        if (filters.sort.dir === 'asc') {
+                        if (filters.sort.dir === 'desc') {
                             return a > b ? -1 : 1;
                         } else {
                             return a < b ? -1 : 1;
