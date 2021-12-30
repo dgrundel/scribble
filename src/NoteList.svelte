@@ -1,6 +1,8 @@
 <script lang="ts">
     import Layout from "./Layout.svelte";
+    import Calendar from "tabler-icons-svelte/icons/Calendar.svelte";
     import FileText from "tabler-icons-svelte/icons/FileText.svelte";
+    import Signature from "tabler-icons-svelte/icons/Signature.svelte";
     import SortAscending from "tabler-icons-svelte/icons/SortAscending.svelte";
     import SortDescending from "tabler-icons-svelte/icons/SortDescending.svelte";
     import NoteListItem from "./NoteListItem.svelte";
@@ -33,7 +35,22 @@ import Icon from "./Icon.svelte";
     <svelte:fragment slot="toolbar">
         <span class="divider"></span>
 
-        <button on:click={() => filters.sort.dir = filters.sort.dir === 'desc' ? 'asc' : 'desc'}><Icon icon={filters.sort.dir === 'desc' ? SortDescending : SortAscending}/></button>
+        <span class="toolbar-text">Sort: </span>
+        <button class={filters.sort.col === 'title' ? 'active' : ''} on:click={() => filters.sort.col = 'title'}>
+            <Icon icon={Signature}/>
+        </button>
+        <button class={filters.sort.col === 'updated' ? 'active' : ''} on:click={() => filters.sort.col = 'updated'}>
+            <Icon icon={Calendar}/>
+        </button>
+
+        <span class="divider"></span>
+
+        <button class={filters.sort.dir !== 'desc' ? 'active' : ''} on:click={() => filters.sort.dir = 'asc'}>
+            <Icon icon={SortAscending}/>
+        </button>
+        <button class={filters.sort.dir === 'desc' ? 'active' : ''} on:click={() => filters.sort.dir = 'desc'}>
+            <Icon icon={SortDescending}/>
+        </button>
     </svelte:fragment>
 
     <svelte:fragment slot="content">
