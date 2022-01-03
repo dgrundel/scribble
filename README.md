@@ -101,3 +101,4 @@ surge www my-project.surge.sh
 - Fonts from Font Library:
   - [Venryn Sans](https://fontlibrary.org/en/font/venryn-sans)
   - [Inconsolata LGC Markup](https://fontlibrary.org/en/font/inconsolata-lgc-markup)
+- [Tabler Icons](https://tabler-icons.io/)

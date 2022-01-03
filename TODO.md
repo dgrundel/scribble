@@ -1,0 +1,6 @@
+- MD front matter for saving metadata
+ - https://www.npmjs.com/package/yaml-front-matter
+ - https://www.npmjs.com/package/front-matter
+- Drawing editor
+ - https://www.npmjs.com/package/@svg-drawing/core
+ - https://github.com/kmkzt/svg-drawing
